@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -25,6 +26,7 @@
               <MenuItem mnemonicParsing="false" onAction="#mitarbeiterAnlegen" text="Mitarbeiter anlegen" />
                   <MenuItem mnemonicParsing="false" onAction="#mitarbeiterBearbeiten" text="Mitarbeiter bearbeiten" />
                   <MenuItem mnemonicParsing="false" onAction="#mitarbeiterLoeschen" text="Mitarbeiter loeschen" />
+                  <MenuItem mnemonicParsing="false" onAction="#passwortErneuern" text="Passwort erneuern" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Auswerten" />
@@ -38,6 +40,50 @@
       </MenuBar>
       <Pane fx:id="rootPane" prefHeight="575.0" prefWidth="800.0" AnchorPane.topAnchor="25.0">
          <children>
+            <Pane fx:id="einstellungen" prefHeight="575.0" prefWidth="800.0" visible="true">
+               <children>
+                  <Label fx:id="messageEinstellungen" alignment="BOTTOM_RIGHT" layoutY="550.0" prefHeight="25.0" prefWidth="800.0">
+                     <padding>
+                        <Insets bottom="5.0" right="25.0" />
+                     </padding>
+                  </Label>
+                  <GridPane layoutX="50.0" layoutY="150.0" prefHeight="250.0" prefWidth="700.0">
+                     <children>
+                        <Label text="Tagesarbeitszeit" />
+                        <Label text="Bundesland" GridPane.rowIndex="1" />
+                        <TextField fx:id="wstunden" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="bundeslaender" prefHeight="25.0" prefWidth="550.0" promptText="Bundesland auswählen" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                        <Label text="Stunden" GridPane.columnIndex="2">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="282.0" minWidth="10.0" prefWidth="235.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="350.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.0" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <Label alignment="CENTER" layoutY="25.0" prefHeight="100.0" prefWidth="800.0" text="Einstellungen">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="340.0" layoutY="450.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Speichern" />
+               </children>
+            </Pane>
             <Pane fx:id="mitAnlegen" prefHeight="575.0" prefWidth="800.0" visible="true">
                <children>
                   <Label fx:id="messageAnlegen" alignment="BOTTOM_RIGHT" layoutY="550.0" prefHeight="25.0" prefWidth="800.0">
@@ -157,57 +203,29 @@
                         <Insets bottom="5.0" right="25.0" />
                      </padding>
                   </Label>
-                  <ComboBox layoutX="150.0" layoutY="110.0" onAction="#mitarbeiterLoeschen" prefHeight="25.0" prefWidth="500.0" promptText="Mitarbeiter auswählen" />
+                  <ComboBox fx:id="mitWaehlenLoeschen" layoutX="150.0" layoutY="110.0" prefHeight="25.0" prefWidth="500.0" promptText="Mitarbeiter auswählen" />
                   <Label alignment="CENTER" layoutY="25.0" prefHeight="100.0" prefWidth="800.0" text="Mitarbeiter loeschen:">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
                   </Label>
-                  <Button layoutX="340.0" layoutY="450.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Löschen" />
+                  <Button layoutX="340.0" layoutY="450.0" mnemonicParsing="false" onAction="#mitarbeiterLoeschen" prefHeight="40.0" prefWidth="120.0" text="Löschen" />
                </children>
             </Pane>
-            <Pane fx:id="einstellungen" prefHeight="575.0" prefWidth="800.0" visible="true">
+            <Pane fx:id="pswErneuern" prefHeight="575.0" prefWidth="800.0">
                <children>
-                  <Label fx:id="messageEinstellungen" alignment="BOTTOM_RIGHT" layoutY="550.0" prefHeight="25.0" prefWidth="800.0">
+                  <Label fx:id="messagePswErneuern" alignment="BOTTOM_RIGHT" layoutY="550.0" prefHeight="25.0" prefWidth="800.0">
                      <padding>
                         <Insets bottom="5.0" right="25.0" />
                      </padding>
                   </Label>
-                  <GridPane layoutX="50.0" layoutY="150.0" prefHeight="250.0" prefWidth="700.0">
-                     <children>
-                        <Label text="Tagesarbeitszeit" />
-                        <Label text="Bundesland" GridPane.rowIndex="1" />
-                        <TextField fx:id="wstunden" GridPane.columnIndex="1" />
-                        <ComboBox fx:id="bundeslaender" prefHeight="25.0" prefWidth="550.0" promptText="Bundesland auswählen" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-                        <Label text="Stunden" GridPane.columnIndex="2">
-                           <padding>
-                              <Insets left="5.0" />
-                           </padding>
-                        </Label>
-                     </children>
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="282.0" minWidth="10.0" prefWidth="235.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="350.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.0" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                  </GridPane>
-                  <Label alignment="CENTER" layoutY="25.0" prefHeight="100.0" prefWidth="800.0" text="Einstellungen">
+                  <ComboBox fx:id="mitWaehlen" layoutX="150.0" layoutY="110.0" prefHeight="25.0" prefWidth="500.0" promptText="Mitarbeiter auswählen" />
+                  <Label alignment="CENTER" layoutY="25.0" prefHeight="100.0" prefWidth="800.0" text="Passwort erneuern">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
                   </Label>
-                  <Button layoutX="340.0" layoutY="450.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Speichern" />
+                  <Button layoutX="340.0" layoutY="450.0" mnemonicParsing="false" onAction="#passwortErneuern" prefHeight="40.0" prefWidth="120.0" text="Generieren" />
                </children>
             </Pane>
          </children>
