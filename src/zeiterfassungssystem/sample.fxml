@@ -49,21 +49,38 @@
                   </Label>
                   <GridPane layoutX="50.0" layoutY="150.0" prefHeight="250.0" prefWidth="700.0">
                      <children>
-                        <Label text="Tagesarbeitszeit" />
-                        <Label text="Bundesland" GridPane.rowIndex="1" />
-                        <TextField fx:id="wstunden" GridPane.columnIndex="1" />
-                        <ComboBox fx:id="bundeslaender" prefHeight="25.0" prefWidth="550.0" promptText="Bundesland auswählen" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-                        <Label text="Stunden" GridPane.columnIndex="2">
-                           <padding>
-                              <Insets left="5.0" />
-                           </padding>
+                        <Label text="Datenbank">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label text="Hostname" GridPane.rowIndex="1" />
+                        <TextField fx:id="dbName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Port" GridPane.rowIndex="2" />
+                        <TextField fx:id="dbHost" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="dbPort" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Datenbankname" GridPane.rowIndex="3" />
+                        <Label text="Username" GridPane.rowIndex="4" />
+                        <Label text="Passwort" GridPane.rowIndex="5" />
+                        <Label text="E-Mail" GridPane.columnIndex="3">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
                         </Label>
+                        <Label text="SMTP - Server" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label text="Username" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <Label text="Passwort" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                        <TextField fx:id="dbUsername" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="dbPasswort" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="mailSmtp" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <TextField fx:id="mailUser" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                        <TextField fx:id="mailPasswort" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                      </children>
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="282.0" minWidth="10.0" prefWidth="235.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="350.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.0" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="282.0" minWidth="10.0" prefWidth="150.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="140.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="150.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.0" minWidth="10.0" prefWidth="140.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -81,7 +98,7 @@
                         <Font name="Arial" size="24.0" />
                      </font>
                   </Label>
-                  <Button layoutX="340.0" layoutY="450.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Speichern" />
+                  <Button layoutX="340.0" layoutY="450.0" mnemonicParsing="false" onAction="#einstellungenSpeichern" prefHeight="40.0" prefWidth="120.0" text="Speichern" />
                </children>
             </Pane>
             <Pane fx:id="mitAnlegen" prefHeight="575.0" prefWidth="800.0" visible="true">
@@ -93,10 +110,10 @@
                   </Label>
                   <GridPane layoutX="50.0" layoutY="150.0" prefHeight="250.0" prefWidth="700.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="282.0" minWidth="10.0" prefWidth="235.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="350.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.0" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="98.0" prefWidth="133.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="267.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="300.0" />
+                        <ColumnConstraints />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -109,24 +126,19 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <TextField fx:id="vName" GridPane.columnIndex="1" GridPane.columnSpan="3" />
-                        <TextField fx:id="nName" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-                        <TextField fx:id="standort" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-                        <TextField fx:id="email" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
-                        <TextField fx:id="telefon" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />
-                        <TextField fx:id="strasse" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-                        <TextField fx:id="plz" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <TextField fx:id="position" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
-                        <TextField fx:id="hausnr" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                        <TextField fx:id="ort" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+                        <TextField fx:id="vName" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+                        <TextField fx:id="nName" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="standort" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="email" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                        <TextField fx:id="telefon" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                        <TextField fx:id="position" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                         <Label text="Vorname" />
                         <Label text="Nachname" GridPane.rowIndex="1" />
                         <Label text="Position" GridPane.rowIndex="2" />
                         <Label text="Standort" GridPane.rowIndex="3" />
                         <Label text="E-Mail" GridPane.rowIndex="4" />
                         <Label text="Telefon" GridPane.rowIndex="5" />
-                        <Label text="Strasse / Hausnummer" GridPane.rowIndex="6" />
-                        <Label text="PLZ / Ort" GridPane.rowIndex="7" />
+                        <ComboBox fx:id="bundeslaender" prefHeight="25.0" prefWidth="550.0" promptText="Bundesland auswählen" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                   <Label alignment="CENTER" layoutY="25.0" prefHeight="100.0" prefWidth="800.0" text="Neuer Mitarbeiter:">
@@ -152,30 +164,24 @@
                   </Label>
                   <GridPane layoutX="50.0" layoutY="150.0" prefHeight="250.0" prefWidth="700.0">
                      <children>
-                        <TextField fx:id="vName1" GridPane.columnIndex="1" GridPane.columnSpan="3" />
-                        <TextField fx:id="nName1" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-                        <TextField fx:id="standort1" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-                        <TextField fx:id="email1" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
-                        <TextField fx:id="telefon1" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />
-                        <TextField fx:id="strasse1" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-                        <TextField fx:id="plz1" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <TextField fx:id="position1" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
-                        <TextField fx:id="hausnr1" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                        <TextField fx:id="ort1" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+                        <TextField fx:id="vName1" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+                        <TextField fx:id="nName1" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="standort1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="email1" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                        <TextField fx:id="telefon1" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                        <TextField fx:id="position1" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                         <Label text="Vorname" />
                         <Label text="Nachname" GridPane.rowIndex="1" />
                         <Label text="Position" GridPane.rowIndex="2" />
                         <Label text="Standort" GridPane.rowIndex="3" />
                         <Label text="E-Mail" GridPane.rowIndex="4" />
                         <Label text="Telefon" GridPane.rowIndex="5" />
-                        <Label text="Strasse / Hausnummer" GridPane.rowIndex="6" />
-                        <Label text="PLZ / Ort" GridPane.rowIndex="7" />
+                        <ComboBox fx:id="bundeslaender1" prefHeight="25.0" prefWidth="550.0" promptText="Bundesland auswählen" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                      </children>
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="282.0" minWidth="10.0" prefWidth="235.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="350.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.0" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="282.0" minWidth="10.0" prefWidth="150.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="300.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="377.0" minWidth="10.0" prefWidth="300.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -196,7 +202,7 @@
                   <ComboBox layoutX="150.0" layoutY="110.0" prefHeight="25.0" prefWidth="500.0" promptText="Mitarbeiter auswählen" />
                </children>
             </Pane>
-            <Pane fx:id="mitLoeschen" prefHeight="575.0" prefWidth="800.0">
+            <Pane fx:id="mitLoeschen" prefHeight="575.0" prefWidth="800.0" visible="true">
                <children>
                   <Label fx:id="messageLoeschen" alignment="BOTTOM_RIGHT" layoutY="550.0" prefHeight="25.0" prefWidth="800.0">
                      <padding>
@@ -212,7 +218,7 @@
                   <Button layoutX="340.0" layoutY="450.0" mnemonicParsing="false" onAction="#mitarbeiterLoeschen" prefHeight="40.0" prefWidth="120.0" text="Löschen" />
                </children>
             </Pane>
-            <Pane fx:id="pswErneuern" prefHeight="575.0" prefWidth="800.0">
+            <Pane fx:id="pswErneuern" prefHeight="575.0" prefWidth="800.0" visible="true">
                <children>
                   <Label fx:id="messagePswErneuern" alignment="BOTTOM_RIGHT" layoutY="550.0" prefHeight="25.0" prefWidth="800.0">
                      <padding>
