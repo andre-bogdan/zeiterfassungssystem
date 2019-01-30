@@ -70,21 +70,22 @@ public class Datenbank {
         return con;
     }
 
-    //Datenbank und E-Mail conf Speichern/Updaten
+    /**
+     * Datenbank und E-Mail conf Speichern/Updaten
+     */
     public void db_update(String host, String port, String dbName, String user, String pass, String smtp, String emailUser, String emailPass){
         File file = new File("system.ini");
             Writer writer = null;
             try {
                 writer = new FileWriter("system.ini");
                 Properties prop1 = new Properties(System.getProperties());
-                prop1.store(writer, "Keine manuellen Aenderungen vornehmen!");
-                prop1.store(writer, "Datenbank");
+                //Datenbank Konfiguration
                 prop1.setProperty("HOST", host);
                 prop1.setProperty("PORT", port);
                 prop1.setProperty("DATENBANK", dbName);
                 prop1.setProperty("USER", user);
                 prop1.setProperty("PWD", pass);
-                prop1.store(writer, "E-Mail");
+                //Mail Konfiguration
                 prop1.setProperty("SMTP", smtp);
                 prop1.setProperty("MAILU", emailUser);
                 prop1.setProperty("MAILP", emailPass);
@@ -100,7 +101,9 @@ public class Datenbank {
             }
         }
 
-        //Daten aus .ini Datei einlesen
+    /**
+     * Konfiguratinsdaten aus .ini Datei einlesen
+     */
     public String[] readIni(){
         String[] configData = new String[8];
         Reader reader = null;
@@ -130,4 +133,24 @@ public class Datenbank {
         //Rueckgabewert
         return configData;
     }
+
+    /*public void mitarbeiterAnlegen(Kunde kunde) {
+        try {
+            statement = connection.createStatement();
+            String sqlQuery = "INSERT INTO kunden (" +
+                    "firma,anrede,vorname,nachname, strasse, hsnr, plz, ort, telefon, telefax, web, email, " +
+                    "ap_anrede, ap_vorname, ap_nachname, ap_telefon, ap_email, stdsatz) VALUES(" +
+                    "'" + kunde.getFirma() + "','" + kunde.getAnrede() + "','" + kunde.getVorname() + "','" + kunde.getName() + "'," +
+                    "'" + kunde.getStrasse() + "','" + kunde.getHausnummer() + "'," +
+                    "'" + kunde.getPlz() + "','" + kunde.getOrt() + "','" + kunde.getTelefon() + "','" + kunde.getFax() + "'," +
+                    "'" + kunde.getWeb() + "','" + kunde.getEmail() + "','" + kunde.getAnrede() + "','" + kunde.getApVorname() + "'," +
+                    "'" + kunde.getApName() + "','" + kunde.getApTelefon() + "','" + kunde.getApEmail() + "'," +
+                    "'" + kunde.getStundenSatz() + "') ";
+
+            statement.executeUpdate(sqlQuery);
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
 }

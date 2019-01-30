@@ -16,11 +16,11 @@ public class Controller {
     //Variablen
     Datenbank db = new Datenbank();
     @FXML
-    Pane rootPane, einstellungen, mitAnlegen, mitBearbeiten, mitLoeschen, pswErneuern;
+    Pane rootPane, einstellungen, mitAnlegen, mitBearbeiten, mitLoeschen, pswErneuern, zeitenErfassen;
     @FXML
-    Label messageEinstellungen, messageAnlegen, messageBearbeiten, messageLoeschen, messagePswErneuern;
+    Label messageEinstellungen, messageAnlegen, messageBearbeiten, messageLoeschen, messagePswErneuern, messageZeitenErfassen;
     @FXML
-    TextField dbHost, dbPort, dbName, dbUsername, dbPasswort, mailSmtp, mailUser, mailPasswort;
+    TextField dbHost, dbPort, dbName, dbUsername, dbPasswort, mailSmtp, mailUser, mailPasswort, mailPort, mailAbsName, mailAbsEmail;
     @FXML
     ComboBox bundeslaender;
 
@@ -60,8 +60,18 @@ public class Controller {
         daten[6] = mailUser.getText();
         daten[7] = mailPasswort.getText();
 
-        db.db_update(host,port,name,user,pass,smtp,mailuser,mailpass);
-        messageEinstellungen.setText(host);
+        try {
+            for (int i = 0; i < daten.length; i++){
+                if(daten[i] == null){
+                    daten[i] = "";
+                }
+            }
+            db.db_update(daten[0],daten[1],daten[2],daten[3],daten[4],daten[5],daten[6],daten[7]);
+            messageEinstellungen.setText("Daten wurden gespeichert!");
+        }catch(NullPointerException e){
+            messageEinstellungen.setText("Es müssen alle Felder ausgefüllt sein!");
+        }
+
     }
     //Beenden
     public void progBeenden(){
@@ -95,6 +105,17 @@ public class Controller {
         rootPane.getChildren().clear();
         rootPane.getChildren().add(pswErneuern);
         messagePswErneuern.setText("");
+    }
+    //Zeiten manuell erfassen
+    public void zeitenErfassen(){
+        rootPane.getChildren().clear();
+        rootPane.getChildren().add(zeitenErfassen);
+        messageZeitenErfassen.setText("");
+    }
+    //Zeiten erfassen speichern
+    public void zeitenErfassenSpeichern(){
+
+        messageZeitenErfassen.setText("Eingaben gespeichert!");
     }
 
     //Auswerten
