@@ -46,7 +46,7 @@
                <children>
                   <ImageView fx:id="image" fitHeight="350.0" fitWidth="700.0" layoutX="50.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../logo.gif" />
+                        <Image url="@logo.png" />
                      </image>
                   </ImageView>
                </children>
