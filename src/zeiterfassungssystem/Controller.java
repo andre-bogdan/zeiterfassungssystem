@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.lang.reflect.Array;
@@ -16,7 +17,9 @@ public class Controller {
     //Variablen
     Datenbank db = new Datenbank();
     @FXML
-    Pane rootPane, einstellungen, mitAnlegen, mitBearbeiten, mitLoeschen, pswErneuern, zeitenErfassen;
+    Pane rootPane, logoPane, einstellungen, mitAnlegen, mitBearbeiten, mitLoeschen, pswErneuern, zeitenErfassen;
+    @FXML
+    ImageView image;
     @FXML
     Label messageEinstellungen, messageAnlegen, messageBearbeiten, messageLoeschen, messagePswErneuern, messageZeitenErfassen;
     @FXML
@@ -29,6 +32,7 @@ public class Controller {
     //Initialisierung der Oberflaeche
     public void initialize(){
         rootPane.getChildren().clear();
+        rootPane.getChildren().add(logoPane);
     }
 
     //Datei

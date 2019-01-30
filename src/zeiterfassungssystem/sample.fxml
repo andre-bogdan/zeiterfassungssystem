@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
@@ -41,6 +42,15 @@
       </MenuBar>
       <Pane fx:id="rootPane" prefHeight="575.0" prefWidth="800.0" AnchorPane.topAnchor="25.0">
          <children>
+            <Pane fx:id="logoPane" prefHeight="575.0" prefWidth="800.0" visible="true">
+               <children>
+                  <ImageView fx:id="image" fitHeight="350.0" fitWidth="700.0" layoutX="50.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../logo.gif" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
             <Pane fx:id="einstellungen" prefHeight="575.0" prefWidth="800.0" visible="true">
                <children>
                   <Label fx:id="messageEinstellungen" alignment="BOTTOM_RIGHT" layoutY="550.0" prefHeight="25.0" prefWidth="800.0">
@@ -241,7 +251,7 @@
                   <Button layoutX="340.0" layoutY="450.0" mnemonicParsing="false" onAction="#passwortErneuern" prefHeight="40.0" prefWidth="120.0" text="Generieren" />
                </children>
             </Pane>
-            <Pane fx:id="zeitenErfassen" layoutX="10.0" layoutY="10.0" prefHeight="575.0" prefWidth="800.0" visible="true">
+            <Pane fx:id="zeitenErfassen" prefHeight="575.0" prefWidth="800.0" visible="true">
                <children>
                   <Label fx:id="messageZeitenErfassen" alignment="BOTTOM_RIGHT" layoutY="550.0" prefHeight="25.0" prefWidth="800.0">
                      <padding>
