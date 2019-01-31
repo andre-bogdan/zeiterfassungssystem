@@ -25,7 +25,8 @@ public class Controller {
     @FXML
     Label messageEinstellungen, messageAnlegen, messageBearbeiten, messageLoeschen, messagePswErneuern, messageZeitenErfassen;
     @FXML
-    TextField dbHost, dbPort, dbName, dbUsername, dbPasswort, mailSmtp, mailUser, mailPasswort, mailPort, mailAbsName, mailAbsEmail;
+    TextField dbHost, dbPort, dbName, dbUsername, dbPasswort, mailSmtp, mailUser, mailPasswort, mailPort, mailAbsName, mailAbsEmail,
+            vName, nName, position, standort, email, telefon ;
     @FXML
     ComboBox bundeslaender;
 
@@ -92,6 +93,21 @@ public class Controller {
         rootPane.getChildren().add(mitAnlegen);
         bundeslaender.setItems(laender);
         messageAnlegen.setText("");
+    }
+    //Neu angelegten Mitarbeiter speichern
+    public void mitarbeiterAnlegenSpeichern(){
+        String[] daten = new String[8];
+        daten[0] = vName.getText();
+        daten[1] = nName.getText();
+        daten[2] = position.getText();
+        daten[3] = standort.getText();
+        daten[4] = (String) bundeslaender.getValue();
+        daten[5] = email.getText();
+        daten[6] = telefon.getText();
+        Mitarbeiter mitarbeiter = new Mitarbeiter(daten[0],daten[1],daten[2],daten[3],daten[4],daten[5],daten[6]);
+        Admin admin = new Admin(mitarbeiter);
+        String[] pid = admin.generierePid();
+        admin.mitarbeiterAnlegen(mitarbeiter);
     }
     //Mitarbeiter Bearbeiten
     public void mitarbeiterBearbeiten(){

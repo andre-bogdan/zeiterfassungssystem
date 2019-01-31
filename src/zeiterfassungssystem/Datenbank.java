@@ -73,7 +73,7 @@ public class Datenbank {
     /**
      * Datenbank und E-Mail conf Speichern/Updaten
      */
-    public void db_update(String host, String port, String dbName, String user, String pass, String smtp, String emailUser, String emailPass){
+    public void db_update(String host, String port, String dbName, String user, String pass, String smtp, String emailUser, String emailPass, String emailPort, String mailAbsName, String mailAbsEmail){
         File file = new File("system.ini");
             Writer writer = null;
             try {
@@ -89,6 +89,9 @@ public class Datenbank {
                 prop1.setProperty("SMTP", smtp);
                 prop1.setProperty("MAILU", emailUser);
                 prop1.setProperty("MAILP", emailPass);
+                prop1.setProperty("MAILPort", emailPort);
+                prop1.setProperty("MAILNAME", mailAbsName);
+                prop1.setProperty("MAILEMAIL", mailAbsEmail);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -134,23 +137,14 @@ public class Datenbank {
         return configData;
     }
 
-    /*public void mitarbeiterAnlegen(Kunde kunde) {
+    public void mitarbeiterSchreiben(Mitarbeiter mitarbeiter) {
         try {
             statement = connection.createStatement();
-            String sqlQuery = "INSERT INTO kunden (" +
-                    "firma,anrede,vorname,nachname, strasse, hsnr, plz, ort, telefon, telefax, web, email, " +
-                    "ap_anrede, ap_vorname, ap_nachname, ap_telefon, ap_email, stdsatz) VALUES(" +
-                    "'" + kunde.getFirma() + "','" + kunde.getAnrede() + "','" + kunde.getVorname() + "','" + kunde.getName() + "'," +
-                    "'" + kunde.getStrasse() + "','" + kunde.getHausnummer() + "'," +
-                    "'" + kunde.getPlz() + "','" + kunde.getOrt() + "','" + kunde.getTelefon() + "','" + kunde.getFax() + "'," +
-                    "'" + kunde.getWeb() + "','" + kunde.getEmail() + "','" + kunde.getAnrede() + "','" + kunde.getApVorname() + "'," +
-                    "'" + kunde.getApName() + "','" + kunde.getApTelefon() + "','" + kunde.getApEmail() + "'," +
-                    "'" + kunde.getStundenSatz() + "') ";
-
+            String sqlQuery = "insert into mitarbeiter(vorname,nachname,position,standort,bundesland,email,telefon) values ('"+mitarbeiter.getVname()+"','"+mitarbeiter.getNname()+"','"+mitarbeiter.getPosition()+"','"+mitarbeiter.getStandort()+"','"+mitarbeiter.getBland()+"','"+mitarbeiter.getEmail()+"','"+mitarbeiter.getTelefon()+"')";
             statement.executeUpdate(sqlQuery);
             statement.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }
