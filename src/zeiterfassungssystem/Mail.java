@@ -11,23 +11,23 @@ import java.util.Properties;
 
 public class Mail {
 
-    public void sendMail(String from, String fromname, String empfaengermail, String user, String psw, String smtpserver, int port, String betreff, String nachricht) throws UnsupportedEncodingException, MessagingException {
+    public void sendMail(String empfaengermail, String betreff, String nachricht) throws UnsupportedEncodingException, MessagingException {
         Datenbank ini = new Datenbank();
         String[] daten = ini.readIni();
         //Absender-Mail
-        final String FROM = ini.;
+        final String FROM = daten[10];
         //Absender-Name
-        final String FROMNAME = fromname;
+        final String FROMNAME = daten[9];
+        //User
+        final String SMTP_USERNAME = daten[6];
+        //Passwort
+        final String SMTP_PASSWORD = daten[7];
+        //SMTP-Server
+        final String HOST = daten[5];
+        //Port
+        final int PORT = Integer.parseInt(daten[8]);
         //Empfaenger
         final String TO = empfaengermail;
-        //User
-        final String SMTP_USERNAME = user;
-        //Passwort
-        final String SMTP_PASSWORD = psw;
-        //SMTP-Server
-        final String HOST = smtpserver;
-        //Port
-        final int PORT = port;
         //Betreff
         final String SUBJECT = betreff;
         //Nachricht

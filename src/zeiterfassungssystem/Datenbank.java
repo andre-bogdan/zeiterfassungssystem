@@ -13,14 +13,8 @@ public class Datenbank {
     private Statement statement;
     private ResultSet resultSet;
 
-    private String host;
-    private String port;
-    private String dbName;
-    private String user;
-    private String pass;
-    private String smtp;
-    private String emailUser;
-    private String emailPass;
+    private String
+            host, port, dbName, user, pass, smtp, emailUser, emailPass, emailPort, emailAbsName, emailAbsEmail, vorname, nachname, position, standort, bundesland, email, telefon;
 
     public Datenbank() {
         Reader reader = null;
@@ -29,9 +23,16 @@ public class Datenbank {
             Properties prop = new Properties();
             prop.load(reader);
             this.host = prop.getProperty("HOST");
+            this.port = prop.getProperty("PORT");
             this.user = prop.getProperty("USER");
             this.pass = prop.getProperty("PWD");
             this.dbName = prop.getProperty("DATENBANK");
+            this.smtp = prop.getProperty("SMTP");
+            this.emailUser = prop.getProperty("MAILU");
+            this.emailPass = prop.getProperty("MAILP");
+            this.emailPort = prop.getProperty("MAILPort");
+            this.emailAbsName = prop.getProperty("MAILNAME");
+            this.emailAbsEmail = prop.getProperty("MAILEMAIL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -73,42 +74,42 @@ public class Datenbank {
     /**
      * Datenbank und E-Mail conf Speichern/Updaten
      */
-    public void db_update(String host, String port, String dbName, String user, String pass, String smtp, String emailUser, String emailPass, String emailPort, String mailAbsName, String mailAbsEmail){
+    public void db_update(String host, String port, String dbName, String user, String pass, String smtp, String emailUser, String emailPass, String emailPort, String emailAbsName, String emailAbsEmail){
         File file = new File("system.ini");
-            Writer writer = null;
+        Writer writer = null;
+        try {
+            writer = new FileWriter("system.ini");
+            Properties prop1 = new Properties(System.getProperties());
+            //Datenbank Konfiguration
+            prop1.setProperty("HOST", host);
+            prop1.setProperty("PORT", port);
+            prop1.setProperty("DATENBANK", dbName);
+            prop1.setProperty("USER", user);
+            prop1.setProperty("PWD", pass);
+            //Mail Konfiguration
+            prop1.setProperty("SMTP", smtp);
+            prop1.setProperty("MAILU", emailUser);
+            prop1.setProperty("MAILP", emailPass);
+            prop1.setProperty("MAILPort", emailPort);
+            prop1.setProperty("MAILNAME", emailAbsName);
+            prop1.setProperty("MAILEMAIL", emailAbsEmail);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             try {
-                writer = new FileWriter("system.ini");
-                Properties prop1 = new Properties(System.getProperties());
-                //Datenbank Konfiguration
-                prop1.setProperty("HOST", host);
-                prop1.setProperty("PORT", port);
-                prop1.setProperty("DATENBANK", dbName);
-                prop1.setProperty("USER", user);
-                prop1.setProperty("PWD", pass);
-                //Mail Konfiguration
-                prop1.setProperty("SMTP", smtp);
-                prop1.setProperty("MAILU", emailUser);
-                prop1.setProperty("MAILP", emailPass);
-                prop1.setProperty("MAILPort", emailPort);
-                prop1.setProperty("MAILNAME", mailAbsName);
-                prop1.setProperty("MAILEMAIL", mailAbsEmail);
+                writer.close();
             } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    writer.close();
-                } catch (Exception e) {
-
-                }
 
             }
+
         }
+    }
 
     /**
      * Konfiguratinsdaten aus .ini Datei einlesen
      */
     public String[] readIni(){
-        String[] configData = new String[8];
+        String[] configData = new String[11];
         Reader reader = null;
         try {
             reader = new FileReader("system.ini");
@@ -122,6 +123,9 @@ public class Datenbank {
             configData[5] = prop.getProperty("SMTP");
             configData[6] = prop.getProperty("MAILU");
             configData[7] = prop.getProperty("MAILP");
+            configData[8] = prop.getProperty("MAILPORT");
+            configData[9] = prop.getProperty("MAILNAME");
+            configData[10] = prop.getProperty("MAILEMAIL");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -140,7 +144,7 @@ public class Datenbank {
     public void mitarbeiterSchreiben(Mitarbeiter mitarbeiter) {
         try {
             statement = connection.createStatement();
-            String sqlQuery = "insert into mitarbeiter(vorname,nachname,position,standort,bundesland,email,telefon) values ('"+mitarbeiter.getVname()+"','"+mitarbeiter.getNname()+"','"+mitarbeiter.getPosition()+"','"+mitarbeiter.getStandort()+"','"+mitarbeiter.getBland()+"','"+mitarbeiter.getEmail()+"','"+mitarbeiter.getTelefon()+"')";
+            String sqlQuery = "insert into mitarbeiter(vorname,nachname,position,standort,bundesland,email,telefon,benutzername,passwort) values ('"+mitarbeiter.getVname()+"','"+mitarbeiter.getNname()+"','"+mitarbeiter.getPosition()+"','"+mitarbeiter.getStandort()+"','"+mitarbeiter.getBland()+"','"+ mitarbeiter.getEmail()+"','"+ mitarbeiter.getTelefon()+"','"+ mitarbeiter.getBenutzername()+"','"+ mitarbeiter.getPasswort()+"')";
             statement.executeUpdate(sqlQuery);
             statement.close();
         } catch (Exception e) {
