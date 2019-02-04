@@ -13,6 +13,9 @@ import javafx.scene.layout.Pane;
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import static com.sun.javafx.scene.control.skin.Utils.getResource;
 import static javafx.scene.input.KeyCode.O;
@@ -20,6 +23,7 @@ import static javafx.scene.input.KeyCode.O;
 public class Controller {
     //Variablen
     Datenbank db = new Datenbank();
+    Mitarbeiter mitarbeiter;
     @FXML
     Pane rootPane, logoPane, einstellungen, mitAnlegen, mitBearbeiten, mitLoeschen, pswErneuern, zeitenErfassen;
     @FXML
@@ -28,9 +32,10 @@ public class Controller {
     Label messageEinstellungen, messageAnlegen, messageBearbeiten, messageLoeschen, messagePswErneuern, messageZeitenErfassen;
     @FXML
     TextField dbHost, dbPort, dbName, dbUsername, dbPasswort, mailSmtp, mailUser, mailPasswort, mailPort, mailAbsName, mailAbsEmail,
-            vName, nName, position, standort, email, telefon ;
+            vName, nName, position, standort, email, telefon,
+            vName1, nName1, position1, standort1, email1, telefon1;
     @FXML
-    ComboBox bundeslaender;
+    ComboBox bundeslaender, bundeslaender1, mitarbeiterauswahl;
 
     ObservableList<String> laender = FXCollections.observableArrayList("Baden-Württemberg","Bayern","Berlin","Brandenburg","Bremen","Hamburg","Hessen","Mecklenburg-Vorpommern","Niedersachsen","Nordrhein-Westfalen","Rheinland-Pfalz","Saarland,Sachsen","Sachsen-Anhalt","Schleswig-Holstein","Thüringen");
 
@@ -156,6 +161,7 @@ public class Controller {
         nName.setText("");
         position.setText("");
         standort.setText("");
+        bundeslaender.setValue("Bundesland");
         email.setText("");
         telefon.setText("");
         messageAnlegen.setText("Daten gespeichert");
@@ -164,8 +170,68 @@ public class Controller {
     public void mitarbeiterBearbeiten(){
         rootPane.getChildren().clear();
         rootPane.getChildren().add(mitBearbeiten);
-        bundeslaender.setItems(laender);
+        bundeslaender1.setItems(laender);
+        db.db_open();
+        ArrayList<String> liste = db.mitarbeiterlisteLesen();
+        ObservableList<String> mitarbeiterliste = FXCollections.observableArrayList(liste);
+        mitarbeiterauswahl.setItems(mitarbeiterliste);
         messageBearbeiten.setText("");
+    }
+    //Ausgewaehlten Mitarbeiter zum Bearbeiten anzeigen
+    public void mitarbeiterBearbeitenAuswahl(){
+        String auswahl = (String) mitarbeiterauswahl.getValue();
+        String[] segs = auswahl.split( Pattern.quote( ", " ) );
+        String id = segs[0];
+        String nn = segs[1];
+        String vn = segs[2];
+        db.db_open();
+        Mitarbeiter mitarbeiter;
+        mitarbeiter = db.mitarbeiterEinLesen(id);
+        vName1.setText(mitarbeiter.getVname());
+        nName1.setText(mitarbeiter.getNname());
+        position1.setText(mitarbeiter.getPosition());
+        standort1.setText(mitarbeiter.getStandort());
+        bundeslaender1.setValue(mitarbeiter.getBland());
+        email1.setText(mitarbeiter.getEmail());
+        telefon1.setText(mitarbeiter.getTelefon());
+        messageBearbeiten.setText("");
+    }
+    //Neu angelegten Mitarbeiter speichern
+    public void mitarbeiterBearbeitenSpeichern(){
+        //daten einlesen
+        String[] daten = new String[8];
+        daten[0] = vName1.getText();
+        daten[1] = nName1.getText();
+        daten[2] = position1.getText();
+        daten[3] = standort1.getText();
+        daten[4] = (String) bundeslaender1.getValue();
+        daten[5] = email1.getText();
+        daten[6] = telefon1.getText();
+
+        try {
+            mitarbeiter.setVname(daten[0]);
+            mitarbeiter.setNname(daten[1]);
+            mitarbeiter.setPosition(daten[2]);
+            mitarbeiter.setStandort(daten[3]);
+            mitarbeiter.setBland(daten[4]);
+            mitarbeiter.setEmail(daten[5]);
+            mitarbeiter.setTelefon(daten[6]);
+
+            Admin admin = new Admin(mitarbeiter);
+            //Mitarbeiter speichern
+            admin.mitarbeiterUpdate(mitarbeiter);
+
+        }catch(NullPointerException e){
+            messageBearbeiten.setText("Es müssen alle Felder ausgefüllt sein!");
+        }
+        vName1.setText("");
+        nName1.setText("");
+        position1.setText("");
+        standort1.setText("");
+        bundeslaender1.setValue("Bundesland");
+        email1.setText("");
+        telefon1.setText("");
+        messageBearbeiten.setText("Daten gespeichert");
     }
     //Mitarbeiter Loeschen
     public void mitarbeiterLoeschen(){

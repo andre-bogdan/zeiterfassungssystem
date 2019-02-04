@@ -173,7 +173,7 @@
                         <Insets bottom="5.0" right="25.0" />
                      </padding>
                   </Label>
-                  <Button layoutX="340.0" layoutY="450.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Speichern" />
+                  <Button layoutX="340.0" layoutY="450.0" mnemonicParsing="false" onAction="#mitarbeiterBearbeitenSpeichern" prefHeight="40.0" prefWidth="120.0" text="Speichern" />
                   <Label alignment="CENTER" layoutY="25.0" prefHeight="100.0" prefWidth="800.0" text="Mitarbeiter bearbeiten:">
                      <font>
                         <Font name="Arial" size="24.0" />
@@ -211,12 +211,12 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
-                  <Label fx:id="messageAnlegen1" alignment="BOTTOM_RIGHT" layoutX="10.0" layoutY="560.0" prefHeight="25.0" prefWidth="800.0">
+                  <Label fx:id="messageBearbeiten" alignment="BOTTOM_RIGHT" layoutX="10.0" layoutY="560.0" prefHeight="25.0" prefWidth="800.0">
                      <padding>
                         <Insets bottom="5.0" right="25.0" />
                      </padding>
                   </Label>
-                  <ComboBox layoutX="150.0" layoutY="110.0" prefHeight="25.0" prefWidth="500.0" promptText="Mitarbeiter auswählen" />
+                  <ComboBox fx:id="mitarbeiterauswahl" layoutX="150.0" layoutY="110.0" onAction="#mitarbeiterBearbeitenAuswahl" prefHeight="25.0" prefWidth="500.0" promptText="Mitarbeiter auswählen" />
                </children>
             </Pane>
             <Pane fx:id="mitLoeschen" prefHeight="575.0" prefWidth="800.0" visible="true">

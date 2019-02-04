@@ -16,4 +16,10 @@ public class Admin extends Mitarbeiter {
         db.db_open();
         db.mitarbeiterSchreiben(mitarbeiter);
     }
+
+    public void mitarbeiterUpdate(Mitarbeiter mitarbeiter){
+        Datenbank db = new Datenbank();
+        db.db_open();
+        db.mitarbeiterSchreibenUpdate(mitarbeiter);
+    }
 }

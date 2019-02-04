@@ -1,17 +1,19 @@
 package zeiterfassungssystem;
 
+import javafx.collections.ObservableList;
+
 import javax.swing.*;
 import java.io.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class Datenbank {
     private Connection connection;
     private Statement statement;
     private ResultSet resultSet;
+
+    private Mitarbeiter mitarbeiter;
 
     private String
             host, port, dbName, user, pass, smtp, emailUser, emailPass, emailPort, emailAbsName, emailAbsEmail, vorname, nachname, position, standort, bundesland, email, telefon;
@@ -141,6 +143,27 @@ public class Datenbank {
         return configData;
     }
 
+    public void mitarbeiterSchreibenUpdate(Mitarbeiter mitarbeiter) {
+       this.mitarbeiter = mitarbeiter;
+        System.out.println(this.mitarbeiter.getId());
+        try {
+            statement = connection.createStatement();
+            String sqlQuery = "UPDATE mitarbeiter SET " +
+                    "vorname = '" + this.mitarbeiter.getVname() + "'," +
+                    "nachname = '" + this.mitarbeiter.getNname() + "'," +
+                    "position = '" + this.mitarbeiter.getPosition() + "'," +
+                    "standort = '" + this.mitarbeiter.getStandort() + "'," +
+                    "bundesland = '" + this.mitarbeiter.getBland() + "'," +
+                    "email = '" + this.mitarbeiter.getEmail() + "'," +
+                    "telefon = '" + this.mitarbeiter.getTelefon() + "' " +
+                    "WHERE id = '" + this.mitarbeiter.getId() + "'";
+            statement.executeUpdate(sqlQuery);
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void mitarbeiterSchreiben(Mitarbeiter mitarbeiter) {
         try {
             statement = connection.createStatement();
@@ -150,5 +173,50 @@ public class Datenbank {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Mitarbeiter  mitarbeiterEinLesen(String id) {
+        Mitarbeiter mitarbeiter = new Mitarbeiter();
+        try {
+            statement = connection.createStatement();
+            String sqlQuery = "SELECT * FROM mitarbeiter WHERE id = '"+id+"'";
+            resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()) {
+                mitarbeiter.setId(resultSet.getInt("id"));
+                mitarbeiter.setVname(resultSet.getString("vorname"));
+                mitarbeiter.setNname(resultSet.getString("nachname"));
+                mitarbeiter.setPosition(resultSet.getString("position"));
+                mitarbeiter.setStandort(resultSet.getString("standort"));
+                mitarbeiter.setBland(resultSet.getString("bundesland"));
+                mitarbeiter.setEmail(resultSet.getString("email"));
+                mitarbeiter.setTelefon(resultSet.getString("telefon"));
+            }
+            statement.close();
+
+        } catch (SQLException e) {
+            System.out.println("Fehler bei Abfrage: " + e);
+        }
+        return mitarbeiter;
+    }
+
+    public ArrayList<String> mitarbeiterlisteLesen() {
+        ArrayList mitarbeiterliste = new ArrayList();
+        try {
+            statement = connection.createStatement();
+            String sqlQuery = "SELECT id, nachname, vorname FROM mitarbeiter";
+            resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String nachn = resultSet.getString("nachname");
+                String vname = resultSet.getString("vorname");
+                String eintrag = id+", "+nachn+", "+vname;
+                mitarbeiterliste.add(eintrag);
+            }
+            statement.close();
+
+        } catch (SQLException e) {
+            System.out.println("Fehler bei Abfrage: " + e);
+        }
+        return mitarbeiterliste;
     }
 }

@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Mitarbeiter {
+    private int id;
     private String vname;
     private String nname;
     private String position;
@@ -44,6 +45,10 @@ public class Mitarbeiter {
         this.email = mitarbeiter.email;
         this.telefon = mitarbeiter.telefon;
     }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getVname() {
         return vname;
