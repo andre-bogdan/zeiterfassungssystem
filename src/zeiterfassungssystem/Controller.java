@@ -24,6 +24,9 @@ public class Controller {
     //Variablen
     Datenbank db = new Datenbank();
     Mitarbeiter mitarbeiter;
+
+    //ArrayList liste, liste2;
+
     @FXML
     Pane rootPane, logoPane, einstellungen, mitAnlegen, mitBearbeiten, mitLoeschen, pswErneuern, zeitenErfassen;
     @FXML
@@ -35,7 +38,7 @@ public class Controller {
             vName, nName, position, standort, email, telefon,
             vName1, nName1, position1, standort1, email1, telefon1;
     @FXML
-    ComboBox bundeslaender, bundeslaender1, mitarbeiterauswahl;
+    ComboBox bundeslaender, bundeslaender1, mitarbeiterauswahl, mitarbeiterauswahl2;
 
     ObservableList<String> laender = FXCollections.observableArrayList("Baden-Württemberg","Bayern","Berlin","Brandenburg","Bremen","Hamburg","Hessen","Mecklenburg-Vorpommern","Niedersachsen","Nordrhein-Westfalen","Rheinland-Pfalz","Saarland,Sachsen","Sachsen-Anhalt","Schleswig-Holstein","Thüringen");
 
@@ -166,15 +169,20 @@ public class Controller {
         telefon.setText("");
         messageAnlegen.setText("Daten gespeichert");
     }
+
+    //------------------------------------------------------------------------------------------------------------------
     //Mitarbeiter Bearbeiten
     public void mitarbeiterBearbeiten(){
         rootPane.getChildren().clear();
         rootPane.getChildren().add(mitBearbeiten);
+        mitarbeiterauswahl.getItems().clear();
         bundeslaender1.setItems(laender);
         db.db_open();
         ArrayList<String> liste = db.mitarbeiterlisteLesen();
-        ObservableList<String> mitarbeiterliste = FXCollections.observableArrayList(liste);
-        mitarbeiterauswahl.setItems(mitarbeiterliste);
+        ObservableList mitarbeiterliste = FXCollections.observableArrayList(liste);
+        mitarbeiterauswahl.getItems().addAll(mitarbeiterliste);
+        liste.clear();
+
         messageBearbeiten.setText("");
     }
     //Ausgewaehlten Mitarbeiter zum Bearbeiten anzeigen
@@ -194,9 +202,10 @@ public class Controller {
         bundeslaender1.setValue(mitarbeiter.getBland());
         email1.setText(mitarbeiter.getEmail());
         telefon1.setText(mitarbeiter.getTelefon());
-        messageBearbeiten.setText(id);
+        messageBearbeiten.setText("");
     }
     //Neu angelegten Mitarbeiter speichern
+    //TODO Wenn der Vorname oder der Nachname geaendert wurde, muss auch ein neuer Benutsetname und ein neues Passwort erstellt werden!
     public void mitarbeiterBearbeitenSpeichern(){
         String auswahl = (String) mitarbeiterauswahl.getValue();
         String[] segs = auswahl.split( Pattern.quote( ", " ) );
@@ -213,8 +222,11 @@ public class Controller {
         daten[5] = email1.getText();
         daten[6] = telefon1.getText();
 
-        System.out.println(id);
+        //System.out.println(id);
+
         try {
+            Mitarbeiter mitarbeiter = new Mitarbeiter();
+            mitarbeiter.setId(Integer.parseInt(id));
             mitarbeiter.setVname(daten[0]);
             mitarbeiter.setNname(daten[1]);
             mitarbeiter.setPosition(daten[2]);
@@ -224,6 +236,7 @@ public class Controller {
             mitarbeiter.setTelefon(daten[6]);
 
             Admin admin = new Admin(mitarbeiter);
+
             //Mitarbeiter speichern
             admin.mitarbeiterUpdate(mitarbeiter);
 
@@ -239,24 +252,48 @@ public class Controller {
         telefon1.setText("");
         messageBearbeiten.setText("Daten gespeichert");
     }
+
+    //------------------------------------------------------------------------------------------------------------------
     //Mitarbeiter Loeschen
     public void mitarbeiterLoeschen(){
         rootPane.getChildren().clear();
         rootPane.getChildren().add(mitLoeschen);
+        mitarbeiterauswahl2.getItems().clear();
+        db.db_open();
+        ArrayList<String> liste2 = db.mitarbeiterlisteLesen();
+        ObservableList mitarbeiterliste2 = FXCollections.observableArrayList(liste2);
+        mitarbeiterauswahl2.getItems().addAll(mitarbeiterliste2);
+
         messageLoeschen.setText("");
     }
+    public void mitarbeiterLoeschenButton(){
+        String auswahl = (String) mitarbeiterauswahl2.getValue();
+        String[] segs = auswahl.split( Pattern.quote( ", " ) );
+        String id = segs[0];
+        String nn = segs[1];
+        String vn = segs[2];
+        Admin admin = new Admin();
+        admin.mitarbeiterLoeschen(Integer.parseInt(id));
+        messageLoeschen.setText("Mitarbeiter " + vn + " " + nn + " ist inaktiv gesetzt!");
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
     //Passwort erneuern
     public void passwortErneuern(){
         rootPane.getChildren().clear();
         rootPane.getChildren().add(pswErneuern);
         messagePswErneuern.setText("");
     }
+
+    //------------------------------------------------------------------------------------------------------------------
     //Zeiten manuell erfassen
     public void zeitenErfassen(){
         rootPane.getChildren().clear();
         rootPane.getChildren().add(zeitenErfassen);
         messageZeitenErfassen.setText("");
     }
+
+    //------------------------------------------------------------------------------------------------------------------
     //Zeiten erfassen speichern
     public void zeitenErfassenSpeichern(){
 

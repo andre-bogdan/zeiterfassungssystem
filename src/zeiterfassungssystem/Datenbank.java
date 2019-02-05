@@ -109,6 +109,7 @@ public class Datenbank {
 
     /**
      * Konfiguratinsdaten aus .ini Datei einlesen
+     * @return
      */
     public String[] readIni(){
         String[] configData = new String[11];
@@ -143,9 +144,13 @@ public class Datenbank {
         return configData;
     }
 
+    /**
+     * Aktualisiertes Mitarbeiter-Obejekt in db schreiben
+     * @param mitarbeiter
+     */
     public void mitarbeiterSchreibenUpdate(Mitarbeiter mitarbeiter) {
        this.mitarbeiter = mitarbeiter;
-        //System.out.println(this.mitarbeiter.getId());
+        System.out.println(this.mitarbeiter.getId());
         try {
             statement = connection.createStatement();
             String sqlQuery = "UPDATE mitarbeiter SET " +
@@ -158,12 +163,17 @@ public class Datenbank {
                     "telefon = '" + this.mitarbeiter.getTelefon() + "' " +
                     "WHERE id = '" + this.mitarbeiter.getId() + "'";
             statement.executeUpdate(sqlQuery);
+            System.out.println("Update erflogreich");
             statement.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Neu angelegten Mitarbeiter in db schreiben
+     * @param mitarbeiter
+     */
     public void mitarbeiterSchreiben(Mitarbeiter mitarbeiter) {
         try {
             statement = connection.createStatement();
@@ -175,6 +185,11 @@ public class Datenbank {
         }
     }
 
+    /**
+     * Mitarbeiter zur uebergebenen id einlesen und zurueck geben
+     * @param id
+     * @return
+     */
     public Mitarbeiter  mitarbeiterEinLesen(String id) {
         Mitarbeiter mitarbeiter = new Mitarbeiter();
         try {
@@ -199,6 +214,10 @@ public class Datenbank {
         return mitarbeiter;
     }
 
+    /**
+     * id, vornam und nachname zur Anzeige in den ComboBoxen auslesen
+     * @return
+     */
     public ArrayList<String> mitarbeiterlisteLesen() {
         ArrayList mitarbeiterliste = new ArrayList();
         try {
@@ -218,5 +237,25 @@ public class Datenbank {
             System.out.println("Fehler bei Abfrage: " + e);
         }
         return mitarbeiterliste;
+    }
+
+    /**
+     * Mitarbeiter loeschen (es werden nur Benutzername und Passwort zurueckgesetzt, weitere Logins zu
+     * verhindern - auf die Datensaetze soll weiterhin zugegriffen werden koennen)
+     * @param id
+     */
+    public void deleteMitarbeiter(int id) {
+        try {
+            statement = connection.createStatement();
+            String sqlQuery = "UPDATE mitarbeiter SET " +
+                    "benutzername = ''," +
+                    "passwort = ''" +
+                    "WHERE id = '" + id + "'";
+            statement.executeUpdate(sqlQuery);
+            statement.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
