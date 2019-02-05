@@ -194,10 +194,15 @@ public class Controller {
         bundeslaender1.setValue(mitarbeiter.getBland());
         email1.setText(mitarbeiter.getEmail());
         telefon1.setText(mitarbeiter.getTelefon());
-        messageBearbeiten.setText("");
+        messageBearbeiten.setText(id);
     }
     //Neu angelegten Mitarbeiter speichern
     public void mitarbeiterBearbeitenSpeichern(){
+        String auswahl = (String) mitarbeiterauswahl.getValue();
+        String[] segs = auswahl.split( Pattern.quote( ", " ) );
+        String id = segs[0];
+        String nn = segs[1];
+        String vn = segs[2];
         //daten einlesen
         String[] daten = new String[8];
         daten[0] = vName1.getText();
@@ -208,6 +213,7 @@ public class Controller {
         daten[5] = email1.getText();
         daten[6] = telefon1.getText();
 
+        System.out.println(id);
         try {
             mitarbeiter.setVname(daten[0]);
             mitarbeiter.setNname(daten[1]);

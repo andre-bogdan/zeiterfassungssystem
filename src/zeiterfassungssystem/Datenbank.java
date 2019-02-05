@@ -145,7 +145,7 @@ public class Datenbank {
 
     public void mitarbeiterSchreibenUpdate(Mitarbeiter mitarbeiter) {
        this.mitarbeiter = mitarbeiter;
-        System.out.println(this.mitarbeiter.getId());
+        //System.out.println(this.mitarbeiter.getId());
         try {
             statement = connection.createStatement();
             String sqlQuery = "UPDATE mitarbeiter SET " +
