@@ -237,13 +237,13 @@
                         <Insets bottom="5.0" right="25.0" />
                      </padding>
                   </Label>
-                  <ComboBox fx:id="mitWaehlen" layoutX="150.0" layoutY="110.0" prefHeight="25.0" prefWidth="500.0" promptText="Mitarbeiter auswählen" />
+                  <ComboBox fx:id="mitarbeiterauswahl3" layoutX="150.0" layoutY="110.0" prefHeight="25.0" prefWidth="500.0" promptText="Mitarbeiter auswählen" />
                   <Label alignment="CENTER" layoutY="25.0" prefHeight="100.0" prefWidth="800.0" text="Passwort erneuern">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
                   </Label>
-                  <Button layoutX="340.0" layoutY="450.0" mnemonicParsing="false" onAction="#passwortErneuern" prefHeight="40.0" prefWidth="120.0" text="Generieren" />
+                  <Button layoutX="340.0" layoutY="450.0" mnemonicParsing="false" onAction="#passwortGenerieren" prefHeight="40.0" prefWidth="120.0" text="Generieren" />
                </children>
             </Pane>
             <Pane fx:id="zeitenErfassen" prefHeight="575.0" prefWidth="800.0" visible="true">

@@ -38,7 +38,7 @@ public class Controller {
             vName, nName, position, standort, email, telefon,
             vName1, nName1, position1, standort1, email1, telefon1;
     @FXML
-    ComboBox bundeslaender, bundeslaender1, mitarbeiterauswahl, mitarbeiterauswahl2;
+    ComboBox bundeslaender, bundeslaender1, mitarbeiterauswahl, mitarbeiterauswahl2, mitarbeiterauswahl3;
 
     ObservableList<String> laender = FXCollections.observableArrayList("Baden-Württemberg","Bayern","Berlin","Brandenburg","Bremen","Hamburg","Hessen","Mecklenburg-Vorpommern","Niedersachsen","Nordrhein-Westfalen","Rheinland-Pfalz","Saarland,Sachsen","Sachsen-Anhalt","Schleswig-Holstein","Thüringen");
 
@@ -282,7 +282,61 @@ public class Controller {
     public void passwortErneuern(){
         rootPane.getChildren().clear();
         rootPane.getChildren().add(pswErneuern);
+        mitarbeiterauswahl3.getItems().clear();
+        db.db_open();
+        ArrayList<String> liste3 = db.mitarbeiterlisteLesen();
+        ObservableList mitarbeiterliste3 = FXCollections.observableArrayList(liste3);
+        mitarbeiterauswahl2.getItems().addAll(mitarbeiterliste3);
+
         messagePswErneuern.setText("");
+    }
+    public void passwortGenerieren(){
+        String auswahl = (String) mitarbeiterauswahl3.getValue();
+        String[] segs = auswahl.split( Pattern.quote( ", " ) );
+        String id = segs[0];
+        String nn = segs[1];
+        String vn = segs[2];
+
+        db.db_open();
+        Mitarbeiter mitarbeiter;
+        mitarbeiter = db.mitarbeiterEinLesen(id);
+        vName.setText(mitarbeiter.getVname());
+        nName1.setText(mitarbeiter.getNname());
+
+        //Benutzername und Passwort generieten
+        String[] pid = mitarbeiter.generierePid(daten[0],daten[1]);
+
+        //Benutzername und Passwort verschicken
+        Mail mail = new Mail();
+        String adresse = daten[5];
+        String betreff = "Zugangsdaten";
+        String nachricht = "<html><head></head><body><h1>Deine Zugangsdaten:</h1><p>Benutzername: "+pid[0]+"</p><p>Passwort: "+pid[1]+"</p></body></html>";
+        try {
+            mail.sendMail(adresse,betreff,nachricht);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+        //Passwort verschluesseln
+        String hpsw = mitarbeiter.hashPasswort(daten[1]);
+
+        mitarbeiter.setVname(daten[0]);
+        mitarbeiter.setNname(daten[1]);
+        mitarbeiter.setPosition(daten[2]);
+        mitarbeiter.setStandort(daten[3]);
+        mitarbeiter.setBland(daten[4]);
+        mitarbeiter.setEmail(daten[5]);
+        mitarbeiter.setTelefon(daten[6]);
+        mitarbeiter.setBenutzername(pid[0]);
+        mitarbeiter.setPasswort(hpsw);
+
+        Admin admin = new Admin(mitarbeiter);
+        //Mitarbeiter speichern
+        admin.mitarbeiterAnlegen(mitarbeiter);
+
+        messageLoeschen.setText("Mitarbeiter " + vn + " " + nn + " ist inaktiv gesetzt!");
     }
 
     //------------------------------------------------------------------------------------------------------------------
