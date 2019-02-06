@@ -334,7 +334,7 @@ public class Controller {
         //Mitarbeiter speichern
         admin.mitarbeiterUpdatePid(Integer.parseInt(id),pid[0],hpsw);
 
-        messagePswErneuern.setText("Mitarbeiter " + vorn + " " + nachn + " hat einen neuen Benutzername und Passwort bekommen!");
+        messagePswErneuern.setText("Mitarbeiter " + vorn + " " + nachn + " hat einen neuen Benutzername und Passwort bekommen ("+pid[1]+")!");
     }
 
     //------------------------------------------------------------------------------------------------------------------

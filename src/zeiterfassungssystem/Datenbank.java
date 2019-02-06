@@ -5,8 +5,10 @@ import javafx.collections.ObservableList;
 import javax.swing.*;
 import java.io.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Properties;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
 
 public class Datenbank {
     private Connection connection;
@@ -294,5 +296,102 @@ public class Datenbank {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public int zufallszeit(int min, int max){
+        int zeit = 0;
+        Random rand = new Random();
+        zeit = rand.nextInt((max - min) + 1) + min;
+        return zeit;
+    }
+
+    public void dbFuellen(int id, int i, String startDatum){
+        Date tag = null;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            tag = df.parse(startDatum);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar cal = new GregorianCalendar();
+        cal.setTimeZone(TimeZone.getTimeZone("CET"));
+        cal.setTime(tag);
+
+        for(int j = 0; j < i; j++) {
+            int stdk = zufallszeit(6, 8);
+            int mink = zufallszeit(0, 59);
+            String von = "0" + stdk + ":" + mink;
+            int stdg = zufallszeit(15, 17);
+            int ming = zufallszeit(0, 59);
+            String bis = stdg + ":" + ming;
+            int dow = cal.get(Calendar.DAY_OF_WEEK);
+            if (dow >= Calendar.MONDAY && dow <= Calendar.FRIDAY) {
+                try {
+                    statement = connection.createStatement();
+                    String sqlQuery = "INSERT INTO arbeitszeiten (userID,tag,kommt,geht) values ( " +
+                            "'" + id + "'," +
+                            "'" + df.format(cal.getTime()) + "'," +
+                            "'" + von + "'," +
+                            "'" + bis + "' " +
+                            ")";
+                    statement.executeUpdate(sqlQuery);
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            cal.add(Calendar.DAY_OF_WEEK, 1);
+        }
+    }
+
+    public int getArbeitstage(String von, String bis) {
+
+        // Lokale Variable zur Ausgabe der Arbeitstage
+        int arbeitstage = 0;
+        java.util.Date anfang = null;
+        Date ende = null;
+
+        // Datumsformat festlegen
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Eingaben parsen
+        try {
+            anfang = df.parse(von);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        try {
+            ende = df.parse(bis);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // Calender-Objekt erstellen
+        Calendar calAnfang = new GregorianCalendar();
+        calAnfang.setTimeZone(TimeZone.getTimeZone("CET"));
+        calAnfang.setFirstDayOfWeek(1);
+        calAnfang.setTime(anfang);
+
+        Calendar calEnde = new GregorianCalendar();
+        calEnde.setTimeZone(TimeZone.getTimeZone("CET"));
+        calEnde.setTime(ende);
+
+        // Berechnung der Arbeitstage
+        if (calEnde.getTimeInMillis() <= calAnfang.getTimeInMillis()) {
+            throw new IllegalArgumentException();
+        } else {
+            while (calEnde.getTimeInMillis() >= calAnfang.getTimeInMillis()) {
+                int dow = calAnfang.get(Calendar.DAY_OF_WEEK);
+                if ((dow != 7) && (dow != 6)) {
+                    arbeitstage = arbeitstage + 1;
+                }
+                calAnfang.add(Calendar.DAY_OF_WEEK, 1);
+            }
+        }
+
+        return arbeitstage;
     }
 }

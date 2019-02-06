@@ -157,10 +157,24 @@ public class Mitarbeiter {
         return zeichenkette;
     }
 
-    public String hashPasswort(String password) {
-        String salt = BCrypt.gensalt(12);
-        String hashed_password = BCrypt.hashpw(password, salt);
+    public static String hashPasswort(String txt) {
 
-        return(hashed_password);
+            return txt;
     }
+
+    /*public static String hashPasswort(String txt) {
+
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(txt.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+            }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+            //error action
+        }
+        return null;
+    }*/
 }
