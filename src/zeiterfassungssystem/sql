@@ -1,0 +1,2 @@
+// Liefert die Arbeitszeit in sec zurueck
+SELECT TIME_TO_SEC(geht) - TIME_TO_SEC(kommt) AS arbeitszeit FROM arbeitszeiten

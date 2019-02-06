@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -36,9 +37,12 @@ public class Controller {
     @FXML
     TextField dbHost, dbPort, dbName, dbUsername, dbPasswort, mailSmtp, mailUser, mailPasswort, mailPort, mailAbsName, mailAbsEmail,
             vName, nName, position, standort, email, telefon,
-            vName1, nName1, position1, standort1, email1, telefon1;
+            vName1, nName1, position1, standort1, email1, telefon1, von, bis;
     @FXML
-    ComboBox bundeslaender, bundeslaender1, mitarbeiterauswahl, mitarbeiterauswahl2, mitarbeiterauswahl3;
+    ComboBox bundeslaender, bundeslaender1, mitarbeiterauswahl, mitarbeiterauswahl2, mitarbeiterauswahl3, mitarbeiterauswahl4;
+
+    @FXML
+    DatePicker datum;
 
     ObservableList<String> laender = FXCollections.observableArrayList("Baden-Württemberg","Bayern","Berlin","Brandenburg","Bremen","Hamburg","Hessen","Mecklenburg-Vorpommern","Niedersachsen","Nordrhein-Westfalen","Rheinland-Pfalz","Saarland,Sachsen","Sachsen-Anhalt","Schleswig-Holstein","Thüringen");
 
@@ -286,7 +290,7 @@ public class Controller {
         db.db_open();
         ArrayList<String> liste3 = db.mitarbeiterlisteLesen();
         ObservableList mitarbeiterliste3 = FXCollections.observableArrayList(liste3);
-        mitarbeiterauswahl2.getItems().addAll(mitarbeiterliste3);
+        mitarbeiterauswahl3.getItems().addAll(mitarbeiterliste3);
 
         messagePswErneuern.setText("");
     }
@@ -300,19 +304,20 @@ public class Controller {
         db.db_open();
         Mitarbeiter mitarbeiter;
         mitarbeiter = db.mitarbeiterEinLesen(id);
-        vName.setText(mitarbeiter.getVname());
-        nName1.setText(mitarbeiter.getNname());
+        String vorn = mitarbeiter.getVname();
+        String nachn = mitarbeiter.getNname();
+        String mail = mitarbeiter.getEmail();
 
-        //Benutzername und Passwort generieten
-        String[] pid = mitarbeiter.generierePid(daten[0],daten[1]);
+        //Benutzername und Passwort generieren
+        String[] pid = mitarbeiter.generierePid(vorn,nachn);
 
         //Benutzername und Passwort verschicken
-        Mail mail = new Mail();
-        String adresse = daten[5];
+        Mail mailer = new Mail();
+        String adresse = mail;
         String betreff = "Zugangsdaten";
         String nachricht = "<html><head></head><body><h1>Deine Zugangsdaten:</h1><p>Benutzername: "+pid[0]+"</p><p>Passwort: "+pid[1]+"</p></body></html>";
         try {
-            mail.sendMail(adresse,betreff,nachricht);
+            mailer.sendMail(adresse,betreff,nachricht);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (MessagingException e) {
@@ -320,23 +325,16 @@ public class Controller {
         }
 
         //Passwort verschluesseln
-        String hpsw = mitarbeiter.hashPasswort(daten[1]);
+        String hpsw = mitarbeiter.hashPasswort(pid[1]);
 
-        mitarbeiter.setVname(daten[0]);
-        mitarbeiter.setNname(daten[1]);
-        mitarbeiter.setPosition(daten[2]);
-        mitarbeiter.setStandort(daten[3]);
-        mitarbeiter.setBland(daten[4]);
-        mitarbeiter.setEmail(daten[5]);
-        mitarbeiter.setTelefon(daten[6]);
         mitarbeiter.setBenutzername(pid[0]);
         mitarbeiter.setPasswort(hpsw);
 
         Admin admin = new Admin(mitarbeiter);
         //Mitarbeiter speichern
-        admin.mitarbeiterAnlegen(mitarbeiter);
+        admin.mitarbeiterUpdatePid(Integer.parseInt(id),pid[0],hpsw);
 
-        messageLoeschen.setText("Mitarbeiter " + vn + " " + nn + " ist inaktiv gesetzt!");
+        messagePswErneuern.setText("Mitarbeiter " + vorn + " " + nachn + " hat einen neuen Benutzername und Passwort bekommen!");
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -344,14 +342,32 @@ public class Controller {
     public void zeitenErfassen(){
         rootPane.getChildren().clear();
         rootPane.getChildren().add(zeitenErfassen);
+
+        mitarbeiterauswahl4.getItems().clear();
+        db.db_open();
+        ArrayList<String> liste4 = db.mitarbeiterlisteLesen();
+        ObservableList mitarbeiterliste4 = FXCollections.observableArrayList(liste4);
+        mitarbeiterauswahl4.getItems().addAll(mitarbeiterliste4);
+
         messageZeitenErfassen.setText("");
     }
 
-    //------------------------------------------------------------------------------------------------------------------
     //Zeiten erfassen speichern
     public void zeitenErfassenSpeichern(){
+        String auswahl = (String) mitarbeiterauswahl4.getValue();
+        String[] segs = auswahl.split( Pattern.quote( ", " ) );
+        String id4 = segs[0];
+        String nn4 = segs[1];
+        String vn4 = segs[2];
+        String date = String.valueOf(datum.getValue());
+        String vonEingabe = von.getText();
+        String bisEingabe = bis.getText();
 
-        messageZeitenErfassen.setText("Eingaben gespeichert!");
+        Admin admin = new Admin();
+
+        admin.zeitenManuellErfassen(Integer.parseInt(id4),date,vonEingabe,bisEingabe);
+
+        messageZeitenErfassen.setText("Fuer "+vn4+" "+nn4+" wurde eine Arbeitszeit von "+vonEingabe+" bis "+bisEingabe+" am "+date+" eingetragen");
     }
 
     //Auswerten

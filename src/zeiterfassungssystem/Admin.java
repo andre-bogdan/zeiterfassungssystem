@@ -27,9 +27,21 @@ public class Admin extends Mitarbeiter {
         db.mitarbeiterSchreibenUpdate(mitarbeiter);
     }
 
+    public void mitarbeiterUpdatePid(int id, String bname, String psw){
+        Datenbank db = new Datenbank();
+        db.db_open();
+        db.updatePid(id, bname, psw);
+    }
+
     public void mitarbeiterLoeschen(int id){
         Datenbank db = new Datenbank();
         db.db_open();
         db.deleteMitarbeiter(id);
+    }
+
+    public void zeitenManuellErfassen(int id, String tag, String von, String bis){
+        Datenbank db = new Datenbank();
+        db.db_open();
+        db.zeitenManuellErfassen(id, tag, von, bis);
     }
 }

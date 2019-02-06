@@ -150,7 +150,6 @@ public class Datenbank {
      */
     public void mitarbeiterSchreibenUpdate(Mitarbeiter mitarbeiter) {
        this.mitarbeiter = mitarbeiter;
-        System.out.println(this.mitarbeiter.getId());
         try {
             statement = connection.createStatement();
             String sqlQuery = "UPDATE mitarbeiter SET " +
@@ -251,6 +250,44 @@ public class Datenbank {
                     "benutzername = ''," +
                     "passwort = ''" +
                     "WHERE id = '" + id + "'";
+            statement.executeUpdate(sqlQuery);
+            statement.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updatePid(int id, String bname, String pas) {
+        try {
+            statement = connection.createStatement();
+            String sqlQuery = "UPDATE mitarbeiter SET " +
+                    "benutzername = '" + bname + "'," +
+                    "passwort = '" + pas + "'" +
+                    "WHERE id = '" + id + "'";
+            statement.executeUpdate(sqlQuery);
+            statement.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void zeitenManuellErfassen(int id, String tag, String von, String bis) {
+        try {
+
+            statement = connection.createStatement();
+            String sqlQueryDel = "DELETE FROM arbeitszeiten WHERE userID = '"+id+"' AND tag = '"+tag+"'";
+            statement.executeUpdate(sqlQueryDel);
+            statement.close();
+
+            statement = connection.createStatement();
+            String sqlQuery = "INSERT INTO arbeitszeiten (userID,tag,kommt,geht) values ( " +
+                    "'" + id + "'," +
+                    "'" + tag + "'," +
+                    "'" + von + "'," +
+                    "'" + bis + "' " +
+                    ")";
             statement.executeUpdate(sqlQuery);
             statement.close();
 
