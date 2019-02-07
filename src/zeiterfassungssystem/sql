@@ -7,5 +7,13 @@ CREATE TABLE `arbeitszeiten` (
  `geht` time(6) DEFAULT NULL,
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
 // Liefert die Arbeitszeit in sec zurueck
 SELECT TIME_TO_SEC(geht) - TIME_TO_SEC(kommt) AS arbeitszeit FROM arbeitszeiten
+
+//Ergebnis auslesen
+while($result2 = mysqli_fetch_array($result)){
+                        echo $result2['geht'];
+                        $erg[$j] = $result2['geht'];
+                        $j++;
+                    }

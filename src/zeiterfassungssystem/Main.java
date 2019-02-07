@@ -22,9 +22,10 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        Datenbank dat = new Datenbank();
+        //Testdaten in db einfuegen
+        /*Datenbank dat = new Datenbank();
         dat.db_open();
-        dat.dbFuellen(2,30,"2019-01-01");
+        dat.dbFuellen(1,6,"2019-02-01");*/
         launch(args);
     }
 }
