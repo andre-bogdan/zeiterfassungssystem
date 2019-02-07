@@ -29,7 +29,7 @@ public class Controller {
     //ArrayList liste, liste2;
 
     @FXML
-    Pane rootPane, logoPane, einstellungen, mitAnlegen, mitBearbeiten, mitLoeschen, pswErneuern, zeitenErfassen;
+    Pane rootPane, logoPane, einstellungen, mitAnlegen, mitBearbeiten, mitLoeschen, pswErneuern, zeitenErfassen, auswerten;
     @FXML
     ImageView image;
     @FXML
@@ -372,6 +372,10 @@ public class Controller {
 
     //Auswerten
     //------------------------------------------------------------------------------------------------------------------
+    public void auswerten() {
+        rootPane.getChildren().clear();
+        rootPane.getChildren().add(auswerten);
+    }
 
     //Hilfe
     //------------------------------------------------------------------------------------------------------------------

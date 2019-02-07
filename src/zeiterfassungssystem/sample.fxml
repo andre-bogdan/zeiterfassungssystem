@@ -31,7 +31,10 @@
                   <MenuItem mnemonicParsing="false" onAction="#zeitenErfassen" text="Zeiten manuell erfassen" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Auswerten" />
+          <Menu mnemonicParsing="false" text="Auswerten">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#auswerten" text="Auswertung erstellen" />
+               </items></Menu>
             <Menu mnemonicParsing="false" text="Hilfe">
               <items>
                 <MenuItem mnemonicParsing="false" text="Hilfe" />
@@ -110,7 +113,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
-                  <Label alignment="CENTER" layoutY="25.0" prefHeight="100.0" prefWidth="800.0" text="Einstellungen">
+                  <Label alignment="CENTER" layoutY="25.0" prefHeight="50.0" prefWidth="800.0" text="Einstellungen">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
@@ -158,7 +161,7 @@
                         <ComboBox fx:id="bundeslaender" prefHeight="25.0" prefWidth="550.0" promptText="Bundesland auswählen" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
-                  <Label alignment="CENTER" layoutY="25.0" prefHeight="100.0" prefWidth="800.0" text="Neuer Mitarbeiter:">
+                  <Label alignment="CENTER" layoutY="25.0" prefHeight="50.0" prefWidth="800.0" text="Neuer Mitarbeiter:">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
@@ -169,7 +172,7 @@
             <Pane fx:id="mitBearbeiten" prefHeight="575.0" prefWidth="800.0" visible="true">
                <children>
                   <Button layoutX="340.0" layoutY="450.0" mnemonicParsing="false" onAction="#mitarbeiterBearbeitenSpeichern" prefHeight="40.0" prefWidth="120.0" text="Speichern" />
-                  <Label alignment="CENTER" layoutY="25.0" prefHeight="100.0" prefWidth="800.0" text="Mitarbeiter bearbeiten:">
+                  <Label alignment="CENTER" layoutY="25.0" prefHeight="50.0" prefWidth="800.0" text="Mitarbeiter bearbeiten:">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
@@ -216,7 +219,7 @@
             </Pane>
             <Pane fx:id="mitLoeschen" prefHeight="575.0" prefWidth="800.0" visible="true">
                <children>
-                  <Label alignment="CENTER" layoutY="25.0" prefHeight="100.0" prefWidth="800.0" text="Mitarbeiter löschen:">
+                  <Label alignment="CENTER" layoutY="25.0" prefHeight="50.0" prefWidth="800.0" text="Mitarbeiter löschen:">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
@@ -232,7 +235,7 @@
             </Pane>
             <Pane fx:id="pswErneuern" prefHeight="575.0" prefWidth="800.0" visible="true">
                <children>
-                  <Label alignment="CENTER" layoutY="25.0" prefHeight="100.0" prefWidth="800.0" text="Passwort erneuern">
+                  <Label alignment="CENTER" layoutY="25.0" prefHeight="50.0" prefWidth="800.0" text="Passwort erneuern">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
@@ -254,7 +257,7 @@
                      </padding>
                   </Label>
                   <ComboBox fx:id="mitarbeiterauswahl4" layoutX="150.0" layoutY="110.0" prefHeight="25.0" prefWidth="500.0" promptText="Mitarbeiter auswählen" />
-                  <Label alignment="CENTER" layoutY="25.0" prefHeight="100.0" prefWidth="800.0" text="Zeiten manuell erfassen">
+                  <Label alignment="CENTER" layoutY="25.0" prefHeight="50.0" prefWidth="800.0" text="Zeiten manuell erfassen">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
@@ -278,6 +281,31 @@
                         <TextField fx:id="bis" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
+               </children>
+            </Pane>
+            <Pane fx:id="auswerten" prefHeight="575.0" prefWidth="800.0" visible="true">
+               <children>
+                  <Label alignment="CENTER" layoutY="25.0" prefHeight="50.0" prefWidth="800.0" text="Auswertung">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="mitarbeiterauswahl41" layoutX="50.0" layoutY="90.0" prefHeight="35.0" prefWidth="275.0" promptText="Mitarbeiter auswählen" />
+                  <ComboBox fx:id="mitarbeiterauswahl411" layoutX="325.0" layoutY="90.0" prefHeight="35.0" prefWidth="150.0" promptText="Jahr" />
+                  <ComboBox fx:id="mitarbeiterauswahl4111" layoutX="475.0" layoutY="90.0" prefHeight="35.0" prefWidth="150.0" promptText="Monat" />
+                  <Button layoutX="625.0" layoutY="90.0" mnemonicParsing="false" onAction="#zeitenErfassenSpeichern" prefHeight="35.0" prefWidth="125.0" text="Auswählen" />
+                  <TableView layoutX="40.0" layoutY="145.0" prefHeight="400.0" prefWidth="720.0">
+                    <columns>
+                      <TableColumn prefWidth="90.0" text="Tag" />
+                      <TableColumn prefWidth="90.0" text="von" />
+                        <TableColumn prefWidth="90.0" text="bis" />
+                        <TableColumn prefWidth="90.0" text="Pause" />
+                        <TableColumn prefWidth="90.0" text="Std ist" />
+                        <TableColumn prefWidth="90.0" text="Std soll" />
+                        <TableColumn prefWidth="90.0" text="Differenz" />
+                        <TableColumn prefWidth="90.0" text="Saldo" />
+                    </columns>
+                  </TableView>
                </children>
             </Pane>
          </children>
