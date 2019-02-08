@@ -1,5 +1,6 @@
 package zeiterfassungssystem;
 
+import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
 import javax.swing.*;
@@ -298,6 +299,45 @@ public class Datenbank {
         }
     }
 
+    public String[][]  auswertungErstellen(String id, String jahr, String monat) {
+        String[][] out = new String[32][32];
+        out[0][7] = "";
+        try {
+            statement = connection.createStatement();
+            String sqlQuery =   "SELECT  tag, kommt, geht , sec_to_time(time_to_sec(geht)-time_to_sec(kommt)) as ist " +
+                                "FROM arbeitszeiten " +
+                                "WHERE MONTH(tag) = '"+monat+"' AND YEAR(tag) = '"+jahr+"' AND userID = '"+id+"' AND kommt is not null AND geht is not null";
+            resultSet = statement.executeQuery(sqlQuery);
+
+
+            int i = 0;
+            while (resultSet.next()) {
+                out[i][0] = resultSet.getString("tag");
+                //System.out.println(out[i][0]);
+                out[i][1] = resultSet.getString("kommt");
+                //System.out.println(out[i][1]);
+                out[i][2] = resultSet.getString("geht");
+                //System.out.println(out[i][2]);
+                out[i][3] = "00:45";
+                //System.out.println(out[i][3]);
+                out[i][4] = resultSet.getString("ist");
+                //System.out.println(out[i][4]);
+                out[i][5] = "08:00";
+                //System.out.println(out[i][5]);
+                out[i][6] = "";
+                //System.out.println(out[i][6]);
+                out[i][7] = "";
+                //System.out.println(out[i][7]);
+                i++;
+            }
+            statement.close();
+
+        } catch (SQLException e) {
+            System.out.println("Fehler bei Abfrage: " + e);
+        }
+        return out;
+    }
+
     public int zufallszeit(int min, int max){
         int zeit = 0;
         Random rand = new Random();
@@ -394,4 +434,6 @@ public class Datenbank {
 
         return arbeitstage;
     }
+
+
 }

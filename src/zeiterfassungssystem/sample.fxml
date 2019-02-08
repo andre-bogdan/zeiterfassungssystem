@@ -290,20 +290,20 @@
                         <Font name="Arial" size="24.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="mitarbeiterauswahl4" layoutX="50.0" layoutY="90.0" prefHeight="35.0" prefWidth="275.0" promptText="Mitarbeiter auswählen" />
+                  <ComboBox fx:id="mitarbeiterauswahl5" layoutX="50.0" layoutY="90.0" prefHeight="35.0" prefWidth="275.0" promptText="Mitarbeiter auswählen" />
                   <ComboBox fx:id="jahre" layoutX="325.0" layoutY="90.0" prefHeight="35.0" prefWidth="150.0" promptText="Jahr" />
                   <ComboBox fx:id="monate" layoutX="475.0" layoutY="90.0" prefHeight="35.0" prefWidth="150.0" promptText="Monat" />
-                  <Button layoutX="625.0" layoutY="90.0" mnemonicParsing="false" onAction="#zeitenErfassenSpeichern" prefHeight="35.0" prefWidth="125.0" text="Auswählen" />
-                  <TableView layoutX="40.0" layoutY="145.0" prefHeight="400.0" prefWidth="720.0">
+                  <Button layoutX="625.0" layoutY="90.0" mnemonicParsing="false" onAction="#auswertungAnzeigen" prefHeight="35.0" prefWidth="125.0" text="Auswählen" />
+                  <TableView fx:id="tabelle" layoutX="40.0" layoutY="145.0" prefHeight="400.0" prefWidth="720.0">
                     <columns>
-                      <TableColumn prefWidth="90.0" text="Tag" />
-                      <TableColumn prefWidth="90.0" text="von" />
-                        <TableColumn prefWidth="90.0" text="bis" />
-                        <TableColumn prefWidth="90.0" text="Pause" />
-                        <TableColumn prefWidth="90.0" text="Std ist" />
-                        <TableColumn prefWidth="90.0" text="Std soll" />
-                        <TableColumn prefWidth="90.0" text="Differenz" />
-                        <TableColumn prefWidth="90.0" text="Saldo" />
+                      <TableColumn fx:id="colTag" prefWidth="90.0" text="tag" />
+                      <TableColumn fx:id="colVon" prefWidth="90.0" text="von" />
+                        <TableColumn fx:id="colBis" prefWidth="90.0" text="bis" />
+                        <TableColumn fx:id="colPause" prefWidth="90.0" text="pause" />
+                        <TableColumn fx:id="colIst" prefWidth="90.0" text="ist" />
+                        <TableColumn fx:id="colSoll" prefWidth="90.0" text="soll" />
+                        <TableColumn fx:id="colDiff" prefWidth="90.0" text="diff" />
+                        <TableColumn fx:id="colSaldo" prefWidth="90.0" text="saldo" />
                     </columns>
                   </TableView>
                </children>

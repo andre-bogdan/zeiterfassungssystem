@@ -3,30 +3,38 @@ package zeiterfassungssystem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.regex.Pattern;
-
-import static com.sun.javafx.scene.control.skin.Utils.getResource;
-import static javafx.scene.input.KeyCode.O;
 
 public class Controller {
     //Variablen
     Datenbank db = new Datenbank();
     Mitarbeiter mitarbeiter;
-
-    //ArrayList liste, liste2;
+    @FXML
+    TableView tabelle;
+    @FXML
+    TableColumn colTag;
+    @FXML
+    TableColumn colVon;
+    @FXML
+    TableColumn colBis;
+    @FXML
+    TableColumn colPause;
+    @FXML
+    TableColumn colIst;
+    @FXML
+    TableColumn colSoll;
+    @FXML
+    TableColumn colDiff;
+    @FXML
+    TableColumn colSaldo;
 
     @FXML
     Pane rootPane, logoPane, einstellungen, mitAnlegen, mitBearbeiten, mitLoeschen, pswErneuern, zeitenErfassen, auswerten;
@@ -45,8 +53,8 @@ public class Controller {
     DatePicker datum;
 
     ObservableList<String> laender = FXCollections.observableArrayList("Baden-Württemberg","Bayern","Berlin","Brandenburg","Bremen","Hamburg","Hessen","Mecklenburg-Vorpommern","Niedersachsen","Nordrhein-Westfalen","Rheinland-Pfalz","Saarland,Sachsen","Sachsen-Anhalt","Schleswig-Holstein","Thüringen");
-    ObservableList<String> jahr = FXCollections.observableArrayList("2018","2019");
-    ObservableList<String> monat = FXCollections.observableArrayList("Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember");
+    ObservableList<String> jahr = FXCollections.observableArrayList("2019");
+    ObservableList<String> monat = FXCollections.observableArrayList("1","2","3","4","5","6","7","8","9","10","11","12");
 
     //Initialisierung der Oberflaeche
     public void initialize(){
@@ -380,12 +388,48 @@ public class Controller {
         db.db_open();
         ArrayList<String> liste5 = db.mitarbeiterlisteLesen();
         ObservableList mitarbeiterliste5 = FXCollections.observableArrayList(liste5);
-        //mitarbeiterauswahl5.setItems(mitarbeiterliste5);
-        //mitarbeiterauswahl5.getItems().addAll(mitarbeiterliste5);
-        //liste5.clear();
+        mitarbeiterauswahl5.getItems().addAll(mitarbeiterliste5);
+        liste5.clear();
         jahre.setItems(jahr);
         monate.setItems(monat);
     }
+    //Auswertung anzeigen
+    public void auswertungAnzeigen(){
+        String auswahl = (String) mitarbeiterauswahl5.getValue();
+        String[] segs = auswahl.split( Pattern.quote( ", " ) );
+        String id5 = segs[0];
+        String nn5 = segs[1];
+        String vn5 = segs[2];
+        String jahr = (String) jahre.getValue();
+        String monat = (String) monate.getValue();
+
+        db.db_open();
+        String[][] erg = db.auswertungErstellen(id5,jahr,monat);
+        
+        TableView<zeileAuswertung> table = new TableView<zeileAuswertung>();
+        ObservableList<zeileAuswertung> data = FXCollections.observableArrayList();
+        for(int i = 0; i < erg.length; i++) {
+            data.addAll(new zeileAuswertung(erg[i][0], erg[i][1], erg[i][2], erg[i][3], erg[i][4], erg[i][5], erg[i][6], erg[i][7]));
+        }
+        colTag.setCellValueFactory(new PropertyValueFactory("tag"));
+        colVon.setCellValueFactory(new PropertyValueFactory("von"));
+        colBis.setCellValueFactory(new PropertyValueFactory("bis"));
+        colPause.setCellValueFactory(new PropertyValueFactory("pause"));
+        colIst.setCellValueFactory(new PropertyValueFactory("ist"));
+        colSoll.setCellValueFactory(new PropertyValueFactory("soll"));
+        colDiff.setCellValueFactory(new PropertyValueFactory("diff"));
+        colSaldo.setCellValueFactory(new PropertyValueFactory("saldo"));
+//Die Tabelle anzeigen.
+
+        tabelle.setItems(data);
+    }
+    /*private <zeile> ObservableList<zeile> getZeile() {
+
+        zeile zeile1 = new zeile();
+
+        ObservableList<zeile> list = FXCollections.observableArrayList(zeile1);
+        return list;
+    }*/
 
     //Hilfe
     //------------------------------------------------------------------------------------------------------------------
