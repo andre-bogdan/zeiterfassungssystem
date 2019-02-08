@@ -290,9 +290,9 @@
                         <Font name="Arial" size="24.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="mitarbeiterauswahl41" layoutX="50.0" layoutY="90.0" prefHeight="35.0" prefWidth="275.0" promptText="Mitarbeiter auswählen" />
-                  <ComboBox fx:id="mitarbeiterauswahl411" layoutX="325.0" layoutY="90.0" prefHeight="35.0" prefWidth="150.0" promptText="Jahr" />
-                  <ComboBox fx:id="mitarbeiterauswahl4111" layoutX="475.0" layoutY="90.0" prefHeight="35.0" prefWidth="150.0" promptText="Monat" />
+                  <ComboBox fx:id="mitarbeiterauswahl4" layoutX="50.0" layoutY="90.0" prefHeight="35.0" prefWidth="275.0" promptText="Mitarbeiter auswählen" />
+                  <ComboBox fx:id="jahre" layoutX="325.0" layoutY="90.0" prefHeight="35.0" prefWidth="150.0" promptText="Jahr" />
+                  <ComboBox fx:id="monate" layoutX="475.0" layoutY="90.0" prefHeight="35.0" prefWidth="150.0" promptText="Monat" />
                   <Button layoutX="625.0" layoutY="90.0" mnemonicParsing="false" onAction="#zeitenErfassenSpeichern" prefHeight="35.0" prefWidth="125.0" text="Auswählen" />
                   <TableView layoutX="40.0" layoutY="145.0" prefHeight="400.0" prefWidth="720.0">
                     <columns>

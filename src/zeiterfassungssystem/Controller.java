@@ -39,12 +39,14 @@ public class Controller {
             vName, nName, position, standort, email, telefon,
             vName1, nName1, position1, standort1, email1, telefon1, von, bis;
     @FXML
-    ComboBox bundeslaender, bundeslaender1, mitarbeiterauswahl, mitarbeiterauswahl2, mitarbeiterauswahl3, mitarbeiterauswahl4;
+    ComboBox bundeslaender, bundeslaender1, mitarbeiterauswahl, mitarbeiterauswahl2, mitarbeiterauswahl3, mitarbeiterauswahl4, mitarbeiterauswahl5, jahre, monate;
 
     @FXML
     DatePicker datum;
 
     ObservableList<String> laender = FXCollections.observableArrayList("Baden-Württemberg","Bayern","Berlin","Brandenburg","Bremen","Hamburg","Hessen","Mecklenburg-Vorpommern","Niedersachsen","Nordrhein-Westfalen","Rheinland-Pfalz","Saarland,Sachsen","Sachsen-Anhalt","Schleswig-Holstein","Thüringen");
+    ObservableList<String> jahr = FXCollections.observableArrayList("2018","2019");
+    ObservableList<String> monat = FXCollections.observableArrayList("Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember");
 
     //Initialisierung der Oberflaeche
     public void initialize(){
@@ -375,6 +377,14 @@ public class Controller {
     public void auswerten() {
         rootPane.getChildren().clear();
         rootPane.getChildren().add(auswerten);
+        db.db_open();
+        ArrayList<String> liste5 = db.mitarbeiterlisteLesen();
+        ObservableList mitarbeiterliste5 = FXCollections.observableArrayList(liste5);
+        //mitarbeiterauswahl5.setItems(mitarbeiterliste5);
+        //mitarbeiterauswahl5.getItems().addAll(mitarbeiterliste5);
+        //liste5.clear();
+        jahre.setItems(jahr);
+        monate.setItems(monat);
     }
 
     //Hilfe
