@@ -315,7 +315,7 @@ public class Datenbank {
                 k++;
             }
 
-            out = new String[k][8];
+            out = new String[k][9];
 
             statement = connection.createStatement();
             String sqlQuery2 = "SELECT  tag, kommt, geht , sec_to_time(time_to_sec(geht)-time_to_sec(kommt)-60*45) as ist," +
@@ -344,6 +344,7 @@ public class Datenbank {
                 //System.out.println(out[i][6]);
                 saldo = saldo + dif;
                 out[i][7] = secFormat(saldo);
+                out[i][8] = String.valueOf(saldo);
                 //System.out.println(out[i][7]);
                 i++;
             }

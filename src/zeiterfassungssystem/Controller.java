@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -426,15 +427,20 @@ public class Controller {
         tabelle.setItems(data);
 
         int k = 0;
-        String i = "";
         String d = "";
-        for(zeileAuswertung x : data){
-            d = x.getSaldo();
+
+        for(int j = 0; j < erg.length; j++){
+            d = erg[j][8];
             k++;
         }
-        int stdsoll = k * 8;
 
-        auswertungText.setText("Stunden soll: " + stdsoll + "        Differenz: " + d + " Stunden");
+        int stdsoll = k * 8;
+        int dsec = Integer.parseInt(d);
+        int sollsec = stdsoll * 60 * 60;
+        int istsec = sollsec + dsec;
+        double diffprozent = dsec / (sollsec / 100.0);
+        double prozent = Math.round(diffprozent * 100.0) / 100.0;
+        auswertungText.setText("Stunden soll: " + db.secFormat(sollsec) + "   Stunden ist: " + db.secFormat(istsec) + "   Differenz: " + db.secFormat(dsec) + " Stunden ( " + prozent + " %)");
     }
     /*private <zeile> ObservableList<zeile> getZeile() {
 
