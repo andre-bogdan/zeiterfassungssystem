@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javax.swing.*;
 import java.io.*;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -299,17 +300,31 @@ public class Datenbank {
         }
     }
 
-    public String[][]  auswertungErstellen(String id, String jahr, String monat) {
-        String[][] out = new String[32][32];
-        out[0][7] = "";
+    public String[][] auswertungErstellen(String id, String jahr, String monat) {
+        String[][] out = null;
         try {
             statement = connection.createStatement();
-            String sqlQuery =   "SELECT  tag, kommt, geht , sec_to_time(time_to_sec(geht)-time_to_sec(kommt)) as ist " +
-                                "FROM arbeitszeiten " +
-                                "WHERE MONTH(tag) = '"+monat+"' AND YEAR(tag) = '"+jahr+"' AND userID = '"+id+"' AND kommt is not null AND geht is not null";
+            String sqlQuery = "SELECT  tag, kommt, geht , sec_to_time(time_to_sec(geht)-time_to_sec(kommt)-60*45) as ist," +
+                    "time_to_sec(subtime(subtime(subtime(geht,kommt),'00:45'),'08:00')) as diff " +
+                    "FROM arbeitszeiten " +
+                    "WHERE MONTH(tag) = '" + monat + "' AND YEAR(tag) = '" + jahr + "' AND userID = '" + id + "' AND kommt is not null AND geht is not null";
             resultSet = statement.executeQuery(sqlQuery);
+            //Ermitteln wie gross das array sein muss
+            int k = 0;
+            while (resultSet.next()) {
+                k++;
+            }
 
+            out = new String[k][8];
 
+            statement = connection.createStatement();
+            String sqlQuery2 = "SELECT  tag, kommt, geht , sec_to_time(time_to_sec(geht)-time_to_sec(kommt)-60*45) as ist," +
+                    "time_to_sec(subtime(subtime(subtime(geht,kommt),'00:45'),'08:00')) as diff " +
+                    "FROM arbeitszeiten " +
+                    "WHERE MONTH(tag) = '" + monat + "' AND YEAR(tag) = '" + jahr + "' AND userID = '" + id + "' AND kommt is not null AND geht is not null";
+            resultSet = statement.executeQuery(sqlQuery2);
+
+            int saldo = 0;
             int i = 0;
             while (resultSet.next()) {
                 out[i][0] = resultSet.getString("tag");
@@ -324,17 +339,45 @@ public class Datenbank {
                 //System.out.println(out[i][4]);
                 out[i][5] = "08:00";
                 //System.out.println(out[i][5]);
-                out[i][6] = "";
+                int dif = resultSet.getInt("diff");
+                out[i][6] = secFormat(dif);
                 //System.out.println(out[i][6]);
-                out[i][7] = "";
+                saldo = saldo + dif;
+                out[i][7] = secFormat(saldo);
                 //System.out.println(out[i][7]);
                 i++;
             }
+
             statement.close();
 
         } catch (SQLException e) {
             System.out.println("Fehler bei Abfrage: " + e);
         }
+        return out;
+    }
+
+    public String secFormat(int secIn){
+        String out = null;
+        if (secIn > 0){
+            int hh = (int) (secIn / 3600);
+            int mm = (int) ((secIn - hh*3600) / 60);
+            int ss = secIn - hh*3600 - mm*60;
+            DecimalFormat format = new DecimalFormat("00");
+            out = format.format(hh) + ":" + format.format(mm) + ":" + format.format(ss);
+        }
+        else if (secIn < 0){
+            secIn = secIn * -1;
+            int hh = (int) (secIn / 3600);
+            int mm = (int) ((secIn - hh*3600) / 60);
+            int ss = secIn - hh*3600 - mm*60;
+            DecimalFormat format = new DecimalFormat("00");
+            out = "- "+format.format(hh) + ":" + format.format(mm) + ":" + format.format(ss);
+        }else{
+            out = "00:00:00";
+        }
+
+
+
         return out;
     }
 

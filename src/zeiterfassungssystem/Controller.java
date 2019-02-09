@@ -41,7 +41,7 @@ public class Controller {
     @FXML
     ImageView image;
     @FXML
-    Label messageEinstellungen, messageAnlegen, messageBearbeiten, messageLoeschen, messagePswErneuern, messageZeitenErfassen;
+    Label messageEinstellungen, messageAnlegen, messageBearbeiten, messageLoeschen, messagePswErneuern, messageZeitenErfassen, auswertungText;
     @FXML
     TextField dbHost, dbPort, dbName, dbUsername, dbPasswort, mailSmtp, mailUser, mailPasswort, mailPort, mailAbsName, mailAbsEmail,
             vName, nName, position, standort, email, telefon,
@@ -418,10 +418,23 @@ public class Controller {
         colIst.setCellValueFactory(new PropertyValueFactory("ist"));
         colSoll.setCellValueFactory(new PropertyValueFactory("soll"));
         colDiff.setCellValueFactory(new PropertyValueFactory("diff"));
+        colDiff.setStyle("-fx-alignment: CENTER-RIGHT;");
         colSaldo.setCellValueFactory(new PropertyValueFactory("saldo"));
+        colSaldo.setStyle("-fx-alignment: CENTER-RIGHT;");
 //Die Tabelle anzeigen.
 
         tabelle.setItems(data);
+
+        int k = 0;
+        String i = "";
+        String d = "";
+        for(zeileAuswertung x : data){
+            d = x.getSaldo();
+            k++;
+        }
+        int stdsoll = k * 8;
+
+        auswertungText.setText("Stunden soll: " + stdsoll + "        Differenz: " + d + " Stunden");
     }
     /*private <zeile> ObservableList<zeile> getZeile() {
 
