@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
+import org.ini4j.*;
 
 public class Datenbank {
     private Connection connection;
@@ -36,7 +37,7 @@ public class Datenbank {
             this.smtp = prop.getProperty("SMTP");
             this.emailUser = prop.getProperty("MAILU");
             this.emailPass = prop.getProperty("MAILP");
-            this.emailPort = prop.getProperty("MAILPort");
+            this.emailPort = prop.getProperty("MAILPORT");
             this.emailAbsName = prop.getProperty("MAILNAME");
             this.emailAbsEmail = prop.getProperty("MAILEMAIL");
         } catch (FileNotFoundException e) {
@@ -67,9 +68,9 @@ public class Datenbank {
         try {
             String url = "jdbc:mysql://" + host + "/" + dbName;
             connection = DriverManager.getConnection(url, user, pass);
-            if(connection == null){
+            if (connection == null) {
                 con = false;
-            }else con = true;
+            } else con = true;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,36 +81,31 @@ public class Datenbank {
     /**
      * Datenbank und E-Mail conf Speichern/Updaten
      */
-    public void db_update(String host, String port, String dbName, String user, String pass, String smtp, String emailUser, String emailPass, String emailPort, String emailAbsName, String emailAbsEmail){
-        File file = new File("system.ini");
-        Writer writer = null;
+    public void db_update(String host, String port, String dbName, String user, String pass, String smtp, String emailUser, String emailPass, String emailPort, String emailAbsName, String emailAbsEmail) {
+
         try {
-            writer = new FileWriter("system.ini");
-            Properties prop1 = new Properties(System.getProperties());
-            //Datenbank Konfiguration
-            prop1.setProperty("HOST", host);
-            prop1.setProperty("PORT", port);
-            prop1.setProperty("DATENBANK", dbName);
-            prop1.setProperty("USER", user);
-            prop1.setProperty("PWD", pass);
-            //Mail Konfiguration
-            prop1.setProperty("SMTP", smtp);
-            prop1.setProperty("MAILU", emailUser);
-            prop1.setProperty("MAILP", emailPass);
-            prop1.setProperty("MAILPort", emailPort);
-            prop1.setProperty("MAILNAME", emailAbsName);
-            prop1.setProperty("MAILEMAIL", emailAbsEmail);
+            Wini ini = new Wini(new File("system.ini"));
+
+            ini.put("datenbank", "HOST", host);
+            ini.put("datenbank", "PORT", port);
+            ini.put("datenbank", "DATENBANK", dbName);
+            ini.put("datenbank", "USER", user);
+            ini.put("datenbank", "PWD", pass);
+            ini.put("datenbank", "PWD", pass);
+            ini.put("email", "SMTP", smtp);
+            ini.put("email", "MAILU", emailUser);
+            ini.put("email", "MAILP", emailPass);
+            ini.put("email", "MAILPORT", emailPort);
+            ini.put("email", "MAILNAME", emailAbsName);
+            ini.put("email", "MAILEMAIL", emailAbsEmail);
+            ini.store();
+            // To catch basically any error related to writing to the file
+            // (The system cannot find the file specified)
         } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                writer.close();
-            } catch (Exception e) {
-
-            }
-
+            System.err.println(e.getMessage());
         }
     }
+
 
     /**
      * Konfiguratinsdaten aus .ini Datei einlesen

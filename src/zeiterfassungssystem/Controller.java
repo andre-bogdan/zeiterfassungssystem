@@ -97,17 +97,19 @@ public class Controller {
         daten[8] = mailPort.getText();
         daten[9] = mailAbsName.getText();
         daten[10] = mailAbsEmail.getText();
-        try {
-            for (int i = 0; i < daten.length; i++){
-                if(daten[i] == null){
+
+            for (int i = 0; i < daten.length; i++) {
+
+                if (daten[i] == null) {
                     daten[i] = "";
+
                 }
+
             }
-            db.db_update(daten[0],daten[1],daten[2],daten[3],daten[4],daten[5],daten[6],daten[7],daten[8],daten[9],daten[10]);
-            messageEinstellungen.setText("Daten wurden gespeichert!");
-        }catch(NullPointerException e){
-            messageEinstellungen.setText("Es müssen alle Felder ausgefüllt sein!");
-        }
+
+                db.db_update(daten[0], daten[1], daten[2], daten[3], daten[4], daten[5], daten[6], daten[7], daten[8], daten[9], daten[10]);
+                messageEinstellungen.setText("Daten wurden gespeichert!");
+
 
     }
     //Beenden
