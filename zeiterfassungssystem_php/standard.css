@@ -1,0 +1,175 @@
+/* Basis Anweisungen */
+html, body {
+    height:100%;
+    font-size:100.01%;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: 'Raleway', Arial, sans serif;
+    line-height: 1.75em;
+    margin:0;
+    color:#000000;
+    background:#ffffff;
+    overflow-x:hidden;
+    -webkit-animation: bugfix infinite 1s;
+}
+
+@-webkit-keyframes bugfix {
+    from { padding: 0; }
+    to { padding: 0; }
+}
+
+h1 {font-size:2.0em; color: #3e79ff;}
+h2 {font-size:1.5em; color: #3e79ff;}
+h3 {font-size:1.0em; color: #3e79ff;}
+h4 {font-size:1.0em; color: #3e79ff;}
+h5 {font-size:1.0em; color: #3e79ff;}
+h6 {font-size:1.0em; color: #3e79ff;}
+
+a:link {font-size:2.0em;font-weight:bold;text-decoration:none;color:#3e79ff;}
+a:visited {font-size:2.0em;font-weight:bold;text-decoration:none;color:#3e79ff;}
+a:hover {font-size:2.0em;font-weight:bold;text-decoration:none;color:#ffffff;}
+a:active {font-size:2.0em;font-weight:bold;text-decoration:none;color:#ffffff;}
+
+a.a2:link {font-size:2.0em;font-weight:bold;text-decoration:none;color:#fff;}
+a.a2:visited {font-size:2.0em;font-weight:bold;text-decoration:none;color:#fff;}
+a.a2:hover {font-size:2.0em;font-weight:bold;text-decoration:none;color:#3e79ff;}
+a.a2:active {font-size:2.0em;font-weight:bold;text-decoration:none;color:#3e79ff;}
+
+a.a3:link {font-size:1.0em;font-weight:bold;text-decoration:none;color:#888;}
+a.a3:visited {font-size:1.0em;font-weight:bold;text-decoration:none;color:#888;}
+a.a3:hover {font-size:1.0em;font-weight:bold;text-decoration:none;color:#000;}
+a.a3:active {font-size:1.0em;font-weight:bold;text-decoration:none;color:#000;}
+
+a{
+    color:#fff;
+    -o-transition:color .3s ease-out;
+    -ms-transition:color .3s ease-out;
+    -moz-transition:color .3s ease-out;
+    -webkit-transition:color .3s ease-out;
+    transition:color .3s ease-out;
+}
+
+.button_green {
+    width:300px;
+    height:75px;
+    background-color: #cccccc; /* Green */
+    border: 2px solid #127913;
+    color: white;
+    padding: 1.0em;
+    text-align: center;
+    text-decoration: none;
+    line-height:2.0em;
+    display: inline-block;
+    font-size: 25px;
+    -webkit-border-radius:0.5em;
+    -moz-border-radius:0.5em;
+    border-radius:0.5em;
+}
+
+.button_red {
+    width:300px;
+    height:75px;
+    background-color: #cccccc; /* Red */
+    border: 2px solid #91111d;
+    color: white;
+    padding: 1.0em;
+    text-align: center;
+    text-decoration: none;
+    line-height:2.0em;
+    display: inline-block;
+    font-size: 25px;
+    -webkit-border-radius:0.5em;
+    -moz-border-radius:0.5em;
+    border-radius:0.5em;
+}
+
+p {
+    text-align:justify;
+}
+
+p.p1 {
+    text-align:center;
+}
+/*
+img {
+	height:auto;
+	max-width:100%;
+	}
+*/
+form {
+    background-color: #fff;
+    width: 400px; /* Breite des Formulars */
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #3e79ff;
+    -webkit-border-radius:0.5em;
+    -moz-border-radius:0.5em;
+    border-radius:0.5em;
+}
+
+form label {
+    display: block; /* Beschriftung auf eigener Zeile */
+}
+
+form input {
+    cursor: pointer;  /* Mauszeiger wird zur Hand */
+    padding: 0.5em 2.0em 0.5em 2.0em;
+}
+
+hr.style01 {
+    border: 0;
+    height: 1px;
+    background: #888;
+    background-image: linear-gradient(to right, #ccc, #888, #ccc);
+}
+
+.clear {
+    clear:both;
+}
+
+#top-wrapper {
+    position:fixed;
+    width:100%;
+    height:8.0em;
+    top:0.0em;
+    left:0.0em;
+    margin-top:0.0em;
+    padding-top: 1.0em;
+    line-height:2.0em;
+    background-color: #cccccc;
+    text-align:center;
+    border-bottom:0.2em solid #3e79ff;
+    z-index:1;
+    overflow:hidden;
+}
+
+#site-wrapper {
+    position:relative;
+    margin: 0.0em auto;
+    background-color:#fff;
+}
+
+#content-center {
+    position:relative;
+    width:90%;
+    margin:0.0em auto;
+    margin-top:10.0em;
+    text-align:center;
+    overflow:hidden;
+}
+
+#footer {
+    clear:both;
+    position:fixed;
+    width:100%;
+    height:4.0em;
+    left:0.0em;
+    bottom:0.0em;
+    background-color:#888888;
+    text-align:center;
+    /*
+    border-top:0.2em solid #3e79ff;
+    */
+}
